@@ -1,18 +1,18 @@
 <?php
 
-namespace PenYFan\WatsonTextToSpeechPhp\Tests;
+namespace PenYFan\WatsonTextToSpeech\Tests;
 
 use Orchestra\Testbench\TestCase;
-use PenYFan\WatsonTextToSpeechPhp\WatsonTextToSpeechPhpServiceProvider;
+use PenYFan\WatsonTextToSpeech\WatsonTextToSpeechServiceProvider;
 
 class ExampleTest extends TestCase
 {
 
     protected function getPackageProviders($app)
     {
-        return [WatsonTextToSpeechPhpServiceProvider::class];
+        return [WatsonTextToSpeechServiceProvider::class];
     }
-    
+
     /** @test */
     public function true_is_true()
     {

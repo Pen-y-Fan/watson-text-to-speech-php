@@ -3,3 +3,4 @@
 /docs/
 /vendor
 /.phpunit.result.cache
+/tests/Secret.php

@@ -22,20 +22,23 @@
     ],
     "require": {
         "php": "^7.1",
-        "illuminate/support": "^6.0"
+        "illuminate/support": "^6.0",
+        "ext-json": "*",
+        "ext-curl": "*"
     },
     "require-dev": {
         "orchestra/testbench": "^4.0",
-        "phpunit/phpunit": "^8.0"
+        "phpunit/phpunit": "^8.0",
+        "ext-spltype": "*"
     },
     "autoload": {
         "psr-4": {
-            "PenYFan\\WatsonTextToSpeechPhp\\": "src"
+            "PenYFan\\WatsonTextToSpeech\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "PenYFan\\WatsonTextToSpeechPhp\\Tests\\": "tests"
+            "PenYFan\\WatsonTextToSpeech\\Tests\\": "tests"
         }
     },
     "scripts": {

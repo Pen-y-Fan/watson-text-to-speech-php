@@ -1,13 +1,13 @@
 <?php
 
-namespace PenYFan\WatsonTextToSpeechPhp;
+namespace PenYFan\WatsonTextToSpeech;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \PenYFan\WatsonTextToSpeechPhp\Skeleton\SkeletonClass
+ * @see \PenYFan\WatsonTextToSpeech\Skeleton\SkeletonClass
  */
-class WatsonTextToSpeechPhpFacade extends Facade
+class WatsonTextToSpeechFacade extends Facade
 {
     /**
      * Get the registered name of the component.

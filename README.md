@@ -17,13 +17,13 @@ composer require pen-y-fan/watson-text-to-speech-php
 
 ## Usage
 
-``` php
+```php
 // Usage description here
 ```
 
 ### Testing
 
-``` bash
+```shell script
 composer test
 ```
 

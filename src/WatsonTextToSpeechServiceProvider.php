@@ -1,10 +1,10 @@
 <?php
 
-namespace PenYFan\WatsonTextToSpeechPhp;
+namespace PenYFan\WatsonTextToSpeech;
 
 use Illuminate\Support\ServiceProvider;
 
-class WatsonTextToSpeechPhpServiceProvider extends ServiceProvider
+class WatsonTextToSpeechServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -54,7 +54,7 @@ class WatsonTextToSpeechPhpServiceProvider extends ServiceProvider
 
         // Register the main class to use with the facade
         $this->app->singleton('watson-text-to-speech-php', function () {
-            return new WatsonTextToSpeechPhp;
+            return new WatsonTextToSpeech;
         });
     }
 }
