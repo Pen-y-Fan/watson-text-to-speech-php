@@ -1,0 +1,59 @@
+{
+    "name": "pen-y-fan/watson-text-to-speech-php",
+    "description": "Package to use Watson API to convert text to speech",
+    "keywords": [
+        "pen-y-fan",
+        "watson-text-to-speech-php",
+        "watson-text-to-speech",
+        "text-to-speech",
+        "tts",
+        "watson",
+        "ibm"
+    ],
+    "homepage": "https://github.com/pen-y-fan/watson-text-to-speech-php",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Michael Pritchard",
+            "email": "michael.pen.y.fan@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "illuminate/support": "^6.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^4.0",
+        "phpunit/phpunit": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "PenYFan\\WatsonTextToSpeechPhp\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PenYFan\\WatsonTextToSpeechPhp\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "test-coverage": "phpunit --coverage-html build/coverage-report"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "PenYFan\\WatsonTextToSpeechPhp\\WatsonTextToSpeechPhpServiceProvider"
+            ],
+            "aliases": {
+                "WatsonTextToSpeechPhp": "PenYFan\\WatsonTextToSpeechPhp\\WatsonTextToSpeechPhpFacade"
+            }
+        }
+    }
+}
