@@ -9,7 +9,6 @@ use PenYFan\WatsonTextToSpeech\WatsonTextToSpeechServiceProvider;
 
 class WatsonTextToSpeechTest extends TestCase
 {
-
     protected function getPackageProviders($app)
     {
         return [WatsonTextToSpeechServiceProvider::class];
@@ -22,12 +21,12 @@ class WatsonTextToSpeechTest extends TestCase
     public function watsonCanSpeak()
     {
         $watson = new WatsonTextToSpeech();
-        $watson->setApiKey(Secret::ApiKey);
+        $watson->setApiKey(Secret::API_KEY);
         $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/v1/synthesize/');
 
         $path = '/public';
         $watson->setOutputPath($path);
-        $file = $watson->runTextToSpeech('I have Watson working in PHP and I have it under a functional test');
+        $file = $watson->runTextToSpeech('Watson is working');
 
         $this->assertStringStartsWith('/public', $file);
     }
