@@ -13,6 +13,15 @@ use Exception;
 class WatsonTextToSpeech
 {
     private $apiKey;
+    private $watsonUrls = [
+        'https://api.au-syd.text-to-speech.watson.cloud.ibm.com',
+        'https://api.eu-gb.text-to-speech.watson.cloud.ibm.com',
+        'https://api.eu-de.text-to-speech.watson.cloud.ibm.com',
+        'https://api.jp-tok.text-to-speech.watson.cloud.ibm.com',
+        'https://api.kr-seo.text-to-speech.watson.cloud.ibm.com',
+        'https://api.us-east.text-to-speech.watson.cloud.ibm.com',
+        'https://api.us-south.text-to-speech.watson.cloud.ibm.com',
+    ];
     private $watsonUrl;
     private $valid_audio_formats = [
         'basic', 'flac', 'l16', 'ogg', 'ogg;codecs=opus', 'ogg;codecs=vorbis', 'mp3',
@@ -55,14 +64,15 @@ class WatsonTextToSpeech
         }
 
         $trimUrl = rtrim($watsonUrl, '/');
+        $trimUrl = rtrim($trimUrl, '/v1/synthesize');
 
-        if (strpos($trimUrl, '/v1/synthesize') !== false) {
-            $this->watsonUrl = $trimUrl;
-            return;
+        if (!in_array($trimUrl, $this->watsonUrls)) {
+            throw new Exception(
+                'Not a valid Watson URL. Allowed URLs: ' . implode(' ', $this->watsonUrls)
+            );
         }
 
-        $this->watsonUrl = rtrim($watsonUrl, '/') . '/v1/synthesize';
-
+        $this->watsonUrl = $trimUrl;
 
     }
 
@@ -229,10 +239,11 @@ class WatsonTextToSpeech
 
     /**
      * prepare output file and name
+     * @throws Exception
      */
     private function prepareOutputFile(): void
     {
-        $fileName = time() . '_' . str_shuffle(time()) . '.' . $this->audioFormat;
+        $fileName = date("Ymd-GisT", time()) . random_int(100, 999) . '.' . $this->audioFormat;
 
         $this->outputFilePath = rtrim($this->outputPath, '/') . '/' . $fileName;
     }
@@ -249,7 +260,7 @@ class WatsonTextToSpeech
         $outputFile = fopen($this->outputFilePath, 'w');
 
         # url with voice
-        $url = $this->watsonUrl . '?voice=' . $this->language . '_' . $this->voice;
+        $url = $this->watsonUrl . '/v1/synthesize?voice=' . $this->language . '_' . $this->voice;
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);

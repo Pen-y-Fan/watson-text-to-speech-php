@@ -59,7 +59,7 @@ class WatsonTextToSpeechTest extends TestCase
         $watson->setLanguage('en-GB');
         $watson->setVoice('KateVoice');
 
-        $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/v1/synthesize/');
+        $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com');
         $watson->setOutputPath('/public');
 
         $file = $watson->runTextToSpeech('Watson is British');

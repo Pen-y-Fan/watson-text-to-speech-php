@@ -219,8 +219,8 @@ $watson->setVoice('MichaelVoice');
   * WangWeiVoice
   * ZhangJingVoice
 * _default:_ `MichaelVoice`
-
 ---
+
 ### Supported language and voice list
 
 list of supported language and voice strings
