@@ -30,4 +30,40 @@ class WatsonTextToSpeechTest extends TestCase
 
         $this->assertStringStartsWith('/public', $file);
     }
+
+    /**
+     * @test
+     * @throws Exception
+     */
+    public function watsonCanSpeakWav()
+    {
+        $watson = new WatsonTextToSpeech();
+        $watson->setApiKey(Secret::API_KEY);
+        $watson->setAudioFormat('wav');
+        $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/v1/synthesize/');
+        $watson->setOutputPath('/public');
+
+        $file = $watson->runTextToSpeech('Watson speaks W.A.V.');
+
+        $this->assertStringStartsWith('/public', $file);
+    }
+
+    /**
+     * @test
+     * @throws Exception
+     */
+    public function watsonCanSpeakKateGB()
+    {
+        $watson = new WatsonTextToSpeech();
+        $watson->setApiKey(Secret::API_KEY);
+        $watson->setLanguage('en-GB');
+        $watson->setVoice('KateVoice');
+
+        $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/v1/synthesize/');
+        $watson->setOutputPath('/public');
+
+        $file = $watson->runTextToSpeech('Watson is British');
+
+        $this->assertStringStartsWith('/public', $file);
+    }
 }

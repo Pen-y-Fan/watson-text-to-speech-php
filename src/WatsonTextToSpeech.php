@@ -14,18 +14,23 @@ class WatsonTextToSpeech
 {
     private $apiKey;
     private $watsonUrl;
-    private $valid_audio_formats = ['ogg', 'wav', 'mp3'];
+    private $valid_audio_formats = [
+        'basic', 'flac', 'l16', 'ogg', 'ogg;codecs=opus', 'ogg;codecs=vorbis', 'mp3',
+        'mpeg', 'mulaw', 'wav', 'webm', 'webm;codecs=opus', 'webm;codecs=vorbi'];
     private $audioFormat = 'mp3';
     private $valid_language = [
-        'en-US', 'es-LA', 'pt-BR', 'en-GB', 'de-DE', 'fr-FR',
-        'it-IT', 'es-ES', 'ja-JP', 'es-ES', 'de-DE'
+        'ar-AR', 'de-DE', 'en-GB', 'en-US', 'es-ES', 'es-LA', 'es-US',
+        'fr-FR', 'it-IT', 'ja-JP', 'nl-NL', 'pt-BR', 'zh-CN'
     ];
     private $language = 'en-US';
     private $valid_voices = [
-        'MichaelVoice', 'SofiaVoice', 'IsabelaVoice', 'KateVoice',
-        'BirgitVoice', 'AllisonVoice', 'ReneeVoice', 'FrancescaVoice',
-        'LauraVoice', 'EmiVoice', 'EnriqueVoice', 'DieterVoice',
-        'LisaVoice', 'SofiaVoice'
+        'AllisonV2Voice', 'AllisonV3Voice', 'AllisonVoice', 'BirgitV2Voice', 'BirgitV3Voice', 'BirgitVoice',
+        'DieterV2Voice', 'DieterV3Voice', 'DieterVoice', 'EmiV3Voice', 'EmiVoice', 'EmilyV3Voice', 'EmmaVoice',
+        'EnriqueV3Voice', 'EnriqueVoice', 'ErikaV3Voice', 'FrancescaV2Voice', 'FrancescaV3Voice', 'FrancescaVoice',
+        'HenryV3Voice', 'IsabelaV3Voice', 'IsabelaVoice', 'KateV3Voice', 'KateVoice', 'KevinV3Voice', 'LauraV3Voice',
+        'LauraVoice', 'LiNaVoice', 'LiamVoice', 'LisaV2Voice', 'LisaV3Voice', 'LisaVoice', 'MichaelV2Voice',
+        'MichaelV3Voice', 'MichaelVoice', 'OliviaV3Voice', 'OmarVoice', 'ReneeV3Voice', 'ReneeVoice', 'SofiaV3Voice',
+        'SofiaVoice', 'WangWeiVoice', 'ZhangJingVoice',
     ];
     private $voice = 'MichaelVoice';
     private $outputPath;
@@ -248,6 +253,7 @@ class WatsonTextToSpeech
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_USERPWD, 'apikey:' . $this->apiKey);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -263,6 +269,7 @@ class WatsonTextToSpeech
         if (curl_errno($ch)) {
             throw new Exception('Error with curl response: ' . curl_error($ch));
         }
+
         curl_close($ch);
         fclose($outputFile);
 
