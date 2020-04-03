@@ -70,7 +70,7 @@ $watson->setApiKey($apiKey);
 
 #### Setting Watson Url
 
-Change to the region you selected when signing up. This example is for London.
+Set the Url to the region you selected when you signed up to the Watson API. This example is for London.
 
 ```php
 $watsonUrl = 'https://api.eu-gb.text-to-speech.watson.cloud.ibm.com';

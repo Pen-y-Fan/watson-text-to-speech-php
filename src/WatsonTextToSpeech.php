@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: anuj
- * Date: 21/5/18
- * Time: 11:14 AM
- */
 
 namespace PenYFan\WatsonTextToSpeech;
 
@@ -185,10 +179,12 @@ class WatsonTextToSpeech
             return true;
         }
 
-        if (mkdir($outputPath, 0777, true)) {
-            return true;
+        try {
+            if (mkdir($outputPath, 0777, true)) {
+                return true;
+            }
+        } catch (Exception $e) {
         }
-
         return false;
     }
 
@@ -196,9 +192,9 @@ class WatsonTextToSpeech
      * text to speech serializer
      *
      * @param $text
-     * @param null $format
-     * @param null $language
-     * @param null $voice
+     * @param string|null $format
+     * @param string|null $language
+     * @param string|null $voice
      * @return string
      * @throws Exception
      */
@@ -213,6 +209,18 @@ class WatsonTextToSpeech
         if (empty($this->outputPath)) {
             throw new Exception(
                 'Output path is not set. Please set output path by passing absolute path string to setOutputPath()'
+            );
+        }
+
+        if (empty($this->apiKey)) {
+            throw new Exception(
+                'API key is not set. Please set API key by passing API Key string to setApiKey()'
+            );
+        }
+
+        if (empty($this->watsonUrl)) {
+            throw new Exception(
+                'Url is not set. Please set Watson URL by passing Url string to setWatsonUrl()'
             );
         }
 
@@ -278,7 +286,7 @@ class WatsonTextToSpeech
 
         $result = curl_exec($ch);
         if (curl_errno($ch)) {
-            throw new Exception('Error with curl response: ' . curl_error($ch));
+            throw new Exception('Error with curl response: ' . curl_error($ch) . ' ' . $result);
         }
 
         curl_close($ch);
@@ -292,22 +300,23 @@ class WatsonTextToSpeech
             //
             $content = file_get_contents($this->outputFilePath);
 
-            $debugContent = json_decode($content);
+            $debugContent = json_decode($content, true);
 
-            if (key_exists('error', $debugContent)) {
+            if (array_key_exists('error', $debugContent)) {
                 // deleted file created, because it is corrupt
                 unlink($this->outputFilePath);
 
                 // throw exception of the returned error
-                throw new Exception("Error:" . $debugContent->error . " code: " . $debugContent->code);
+                throw new Exception("Error:" . $debugContent['error'] . " code: " . $debugContent['code']);
             }
         }
 
-        if ($result && is_file($this->outputFilePath)) {
-            return $this->outputFilePath;
+        if (!$result || !is_file($this->outputFilePath)) {
+            throw new Exception('Error creating file');
         }
 
-        throw new Exception('Error creating file');
+        return $this->outputFilePath;
+
     }
 
 }
