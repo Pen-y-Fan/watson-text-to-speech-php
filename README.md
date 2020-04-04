@@ -30,19 +30,14 @@ Minimum required information to run the package.
 ```php
 use PenYFan\WatsonTextToSpeech\WatsonTextToSpeech;
 
-$apiKey = 'yourAPIkeyFromIBM';
-$watsonUrl = 'https://api.eu-gb.text-to-speech.watson.cloud.ibm.com';
-$path = '/public';
-$text = 'This is the text you want to convert to speech';
-
 $watson = new WatsonTextToSpeech();
-$watson->setApiKey($apiKey);
-$watson->setWatsonUrl($watsonUrl);
-$watson->setOutputPath($path);
-$file = $watson->runTextToSpeech($text);
+$watson->setApiKey('yourAPIkeyFromIBM');
+$watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com');
+$watson->setOutputPath('/public');
+$file = $watson->runTextToSpeech('This is the text you want to convert to speech');
 ```
 
-This will save an mp3 (default) in the /public folder (or the folder you specified). The $file variable will confirm the
+This will save a mp3 (default) in the /public folder (or the folder you specified). The $file variable will confirm the
  path.
 
 ### Detailed explanation
