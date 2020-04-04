@@ -23,7 +23,7 @@ First obtain an API Key, free from [IBM Watson](https://www.ibm.com/uk-en/cloud/
  tier allows 10,000 Characters per Month. No credit card is required. For full instructions see 
  [Getting started with Text to Speech](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-gettingStarted#getting-started-tutorial)
 
-#### TL&DR;
+### TL&DR;
 
 Minimum required information to run the package.
 

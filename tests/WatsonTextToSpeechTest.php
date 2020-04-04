@@ -78,7 +78,7 @@ class WatsonTextToSpeechTest extends TestCase
         $watson->setOutputPath('/public');
         $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com');
 
-        $file = $watson->runTextToSpeech('Parlez-vous français', 'wav', 'fr-FR','ReneeV3Voice');
+        $file = $watson->runTextToSpeech('Parlez-vous français', 'wav', 'fr-FR', 'ReneeV3Voice');
 
         $fileName = date("Ymd-Gi", time());
         $this->assertStringStartsWith('/public/' . $fileName, $file);
@@ -249,7 +249,7 @@ class WatsonTextToSpeechTest extends TestCase
      */
     public function watsonOutputPathCanBeCreated()
     {
-        $path = sys_get_temp_dir() . '/' .  random_int(1000, 9999);
+        $path = sys_get_temp_dir() . '/' . random_int(1000, 9999);
 
         $watson = new WatsonTextToSpeech();
         $watson->setOutputPath($path);
@@ -326,6 +326,37 @@ class WatsonTextToSpeechTest extends TestCase
         $path = '/public';
         $watson->setOutputPath($path);
         $this->expectExceptionMessage('Error:Unauthorized code: 401');
+
+        $watson->runTextToSpeech('BrokenApi');
+    }
+
+    /**
+     * @test
+     * @throws Exception
+     */
+    public function watsonVoiceAndLanguageCombinationMustBeValid()
+    {
+        $watson = new WatsonTextToSpeech();
+        $watson->setApiKey(Secret::API_KEY . 'invalid');
+        $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com');
+        $watson->setOutputPath('/public');
+        $watson->setLanguage('en-US');
+        $watson->setVoice('KateVoice');
+
+        $expected = 'Not a valid language and voice combination. Allowed combinations: ar-AR_OmarVoice, ';
+        $expected .= 'de-DE_BirgitV2Voice, de-DE_BirgitV3Voice, de-DE_BirgitVoice, de-DE_DieterV2Voice,';
+        $expected .= ' de-DE_DieterV3Voice, de-DE_DieterVoice, de-DE_ErikaV3Voice, en-GB_KateV3Voice, ';
+        $expected .= 'en-GB_KateVoice, en-US_AllisonV2Voice, en-US_AllisonV3Voice, en-US_AllisonVoice, ';
+        $expected .= 'en-US_EmilyV3Voice, en-US_HenryV3Voice, en-US_KevinV3Voice, en-US_LisaV2Voice, ';
+        $expected .= 'en-US_LisaV3Voice, en-US_LisaVoice, en-US_MichaelV2Voice, en-US_MichaelV3Voice, ';
+        $expected .= 'en-US_MichaelVoice, en-US_OliviaV3Voice, es-ES_EnriqueV3Voice, es-ES_EnriqueVoice, ';
+        $expected .= 'es-ES_LauraV3Voice, es-ES_LauraVoice, es-LA_SofiaV3Voice, es-LA_SofiaVoice, es-US_SofiaV3Voice, ';
+        $expected .= 'es-US_SofiaVoice, fr-FR_ReneeV3Voice, fr-FR_ReneeVoice, it-IT_FrancescaV2Voice, ';
+        $expected .= 'it-IT_FrancescaV3Voice, it-IT_FrancescaVoice, ja-JP_EmiV3Voice, ja-JP_EmiVoice, ';
+        $expected .= 'nl-NL_EmmaVoice, nl-NL_LiamVoice, pt-BR_IsabelaV3Voice, pt-BR_IsabelaVoice, zh-CN_LiNaVoice, ';
+        $expected .= 'zh-CN_WangWeiVoice, zh-CN_ZhangJingVoice';
+
+        $this->expectExceptionMessage($expected);
 
         $watson->runTextToSpeech('BrokenApi');
     }
