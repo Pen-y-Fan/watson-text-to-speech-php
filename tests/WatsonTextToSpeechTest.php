@@ -26,7 +26,7 @@ class WatsonTextToSpeechTest extends TestCase
 
         $path = '/public';
         $watson->setOutputPath($path);
-        $file = $watson->runTextToSpeech('Watson is working');
+        $file = $watson->runTextToSpeech('Working');
 
         $this->assertStringStartsWith('/public', $file);
     }
@@ -43,7 +43,7 @@ class WatsonTextToSpeechTest extends TestCase
         $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/v1/synthesize/');
         $watson->setOutputPath('/public');
 
-        $file = $watson->runTextToSpeech('Watson speaks W.A.V.');
+        $file = $watson->runTextToSpeech('W.A.V.');
 
         $this->assertStringStartsWith('/public', $file);
     }
@@ -62,7 +62,7 @@ class WatsonTextToSpeechTest extends TestCase
         $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com');
         $watson->setOutputPath('/public');
 
-        $file = $watson->runTextToSpeech('Watson is British');
+        $file = $watson->runTextToSpeech('British');
 
         $this->assertStringStartsWith('/public', $file);
     }
@@ -78,10 +78,9 @@ class WatsonTextToSpeechTest extends TestCase
         $watson->setOutputPath('/public');
         $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com');
 
-        $file = $watson->runTextToSpeech('Parlez-vous français', 'wav', 'fr-FR', 'ReneeV3Voice');
+        $file = $watson->runTextToSpeech('français', 'wav', 'fr-FR', 'ReneeV3Voice');
 
-        $fileName = date("Ymd-Gi", time());
-        $this->assertStringStartsWith('/public/' . $fileName, $file);
+        $this->assertStringStartsWith('/public/', $file);
     }
 
     /**
@@ -178,7 +177,8 @@ class WatsonTextToSpeechTest extends TestCase
     public function watsonLanguageIsInvalid()
     {
         $watson = new WatsonTextToSpeech();
-        $expected = 'Not a valid language provided. Allowed languages: ar-AR de-DE en-GB en-US es-ES es-LA es-US ';
+        $expected = 'Not a valid language provided. Allowed languages: ';
+        $expected .= 'ar-AR de-DE en-GB en-US es-ES es-LA es-US ';
         $expected .= 'fr-FR it-IT ja-JP nl-NL pt-BR zh-CN';
         $this->expectExceptionMessage($expected);
 
@@ -268,7 +268,6 @@ class WatsonTextToSpeechTest extends TestCase
         $watson = new WatsonTextToSpeech();
         $this->expectExceptionMessage('No text string provided');
 
-
         $watson->runTextToSpeech('');
     }
 
@@ -283,7 +282,7 @@ class WatsonTextToSpeechTest extends TestCase
 
         $this->expectExceptionMessage($expected);
 
-        $watson->runTextToSpeech('text');
+        $watson->runTextToSpeech('No Output');
     }
 
     /**
@@ -296,7 +295,7 @@ class WatsonTextToSpeechTest extends TestCase
         $watson->setOutputPath('/public');
 
         $this->expectExceptionMessage('API key is not set. Please set API key by passing API Key string to setApiKey()');
-        $watson->runTextToSpeech('text');
+        $watson->runTextToSpeech('No API Key');
     }
 
     /**
@@ -310,7 +309,7 @@ class WatsonTextToSpeechTest extends TestCase
         $watson->setApiKey(Secret::API_KEY);
 
         $this->expectExceptionMessage('Url is not set. Please set Watson URL by passing Url string to setWatsonUrl()');
-        $watson->runTextToSpeech('text');
+        $watson->runTextToSpeech('No Url');
     }
 
     /**
@@ -327,7 +326,7 @@ class WatsonTextToSpeechTest extends TestCase
         $watson->setOutputPath($path);
         $this->expectExceptionMessage('Error:Unauthorized code: 401');
 
-        $watson->runTextToSpeech('BrokenApi');
+        $watson->runTextToSpeech('Broken APIi');
     }
 
     /**
@@ -358,7 +357,7 @@ class WatsonTextToSpeechTest extends TestCase
 
         $this->expectExceptionMessage($expected);
 
-        $watson->runTextToSpeech('BrokenApi');
+        $watson->runTextToSpeech('Broken Voice and Language combination');
     }
 
 }
