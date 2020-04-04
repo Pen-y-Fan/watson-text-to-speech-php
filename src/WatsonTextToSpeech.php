@@ -6,7 +6,14 @@ use Exception;
 
 class WatsonTextToSpeech
 {
+    /**
+     * @var string
+     */
     private $apiKey;
+
+    /**
+     * @var array
+     */
     private $watsonUrls = [
         'https://api.au-syd.text-to-speech.watson.cloud.ibm.com',
         'https://api.eu-gb.text-to-speech.watson.cloud.ibm.com',
@@ -16,16 +23,40 @@ class WatsonTextToSpeech
         'https://api.us-east.text-to-speech.watson.cloud.ibm.com',
         'https://api.us-south.text-to-speech.watson.cloud.ibm.com',
     ];
+
+    /**
+     * @var string
+     */
     private $watsonUrl;
+
+    /**
+     * @var array
+     */
     private $valid_audio_formats = [
         'basic', 'flac', 'l16', 'ogg', 'ogg;codecs=opus', 'ogg;codecs=vorbis', 'mp3',
-        'mpeg', 'mulaw', 'wav', 'webm', 'webm;codecs=opus', 'webm;codecs=vorbi'];
+        'mpeg', 'mulaw', 'wav', 'webm', 'webm;codecs=opus', 'webm;codecs=vorbi', ];
+
+    /**
+     * @var string
+     */
     private $audioFormat = 'mp3';
+
+    /**
+     * @var array
+     */
     private $valid_language = [
         'ar-AR', 'de-DE', 'en-GB', 'en-US', 'es-ES', 'es-LA', 'es-US',
-        'fr-FR', 'it-IT', 'ja-JP', 'nl-NL', 'pt-BR', 'zh-CN'
+        'fr-FR', 'it-IT', 'ja-JP', 'nl-NL', 'pt-BR', 'zh-CN',
     ];
+
+    /**
+     * @var string
+     */
     private $language = 'en-US';
+
+    /**
+     * @var array
+     */
     private $valid_voices = [
         'AllisonV2Voice', 'AllisonV3Voice', 'AllisonVoice', 'BirgitV2Voice', 'BirgitV3Voice', 'BirgitVoice',
         'DieterV2Voice', 'DieterV3Voice', 'DieterVoice', 'EmiV3Voice', 'EmiVoice', 'EmilyV3Voice', 'EmmaVoice',
@@ -35,8 +66,20 @@ class WatsonTextToSpeech
         'MichaelV3Voice', 'MichaelVoice', 'OliviaV3Voice', 'OmarVoice', 'ReneeV3Voice', 'ReneeVoice', 'SofiaV3Voice',
         'SofiaVoice', 'WangWeiVoice', 'ZhangJingVoice',
     ];
+
+    /**
+     * @var string
+     */
     private $voice = 'MichaelVoice';
+
+    /**
+     * @var string
+     */
     private $languageAndVoice;
+
+    /**
+     * @var array
+     */
     private $validLanguagesAndVoices = [
         'ar-AR_OmarVoice', 'de-DE_BirgitV2Voice', 'de-DE_BirgitV3Voice', 'de-DE_BirgitVoice', 'de-DE_DieterV2Voice',
         'de-DE_DieterV3Voice', 'de-DE_DieterVoice', 'de-DE_ErikaV3Voice', 'en-GB_KateV3Voice', 'en-GB_KateVoice',
@@ -49,8 +92,20 @@ class WatsonTextToSpeech
         'ja-JP_EmiV3Voice', 'ja-JP_EmiVoice', 'nl-NL_EmmaVoice', 'nl-NL_LiamVoice', 'pt-BR_IsabelaV3Voice',
         'pt-BR_IsabelaVoice', 'zh-CN_LiNaVoice', 'zh-CN_WangWeiVoice', 'zh-CN_ZhangJingVoice',
     ];
+
+    /**
+     * @var string
+     */
     private $outputPath;
+
+    /**
+     * @var string
+     */
     private $outputFilePath;
+
+    /**
+     * @var string
+     */
     private $text;
 
     /**
@@ -61,7 +116,6 @@ class WatsonTextToSpeech
      * https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/
      * https://api.eu-gb.text-to-speech.watson.cloud.ibm.com
      *
-     * @param $watsonUrl
      * @throws Exception
      */
     public function setWatsonUrl(string $watsonUrl): void
@@ -73,20 +127,16 @@ class WatsonTextToSpeech
         $trimUrl = rtrim($watsonUrl, '/');
         $trimUrl = rtrim($trimUrl, '/v1/synthesize');
 
-        if (!in_array($trimUrl, $this->watsonUrls)) {
-            throw new Exception(
-                'Not a valid Watson URL. Allowed URLs: ' . implode(' ', $this->watsonUrls)
-            );
+        if (! in_array($trimUrl, $this->watsonUrls, true)) {
+            throw new Exception('Not a valid Watson URL. Allowed URLs: ' . implode(' ', $this->watsonUrls));
         }
 
         $this->watsonUrl = $trimUrl;
-
     }
 
     /**
      * set watson API key
      *
-     * @param $apiKey
      * @throws Exception
      */
     public function setApiKey(string $apiKey): void
@@ -102,7 +152,6 @@ class WatsonTextToSpeech
      * set audio format,
      * default: mp3
      *
-     * @param $format
      * @throws Exception
      */
     public function setAudioFormat(string $format): void
@@ -111,7 +160,7 @@ class WatsonTextToSpeech
             throw new Exception('Audio format string is empty');
         }
 
-        if (!in_array($format, $this->valid_audio_formats)) {
+        if (! in_array($format, $this->valid_audio_formats, true)) {
             throw new Exception(
                 'Not a valid audio format. Allowed formats: ' . implode(' ', $this->valid_audio_formats)
             );
@@ -124,18 +173,19 @@ class WatsonTextToSpeech
      * set language of audio,
      * default: 'en-US'
      *
-     * @param $language
      * @throws Exception
      */
     public function setLanguage(string $language): void
     {
-        if (empty($language))
+        if (empty($language)) {
             throw new Exception('Language string is empty');
+        }
 
-        if (!in_array($language, $this->valid_language))
+        if (! in_array($language, $this->valid_language, true)) {
             throw new Exception(
                 'Not a valid language provided. Allowed languages: ' . implode(' ', $this->valid_language)
             );
+        }
 
         $this->language = $language;
     }
@@ -144,20 +194,17 @@ class WatsonTextToSpeech
      * set voice,
      * default:'MichaelVoice'
      *
-     * @param $voice
      * @throws Exception
      */
     public function setVoice(string $voice): void
     {
-        if (empty($voice))
+        if (empty($voice)) {
             throw new Exception('Voice string is empty');
-
-        if (!in_array($voice, $this->valid_voices)) {
-            throw new Exception(
-                'Not a valid voice provided. Allowed voices: ' . implode(' ', $this->valid_voices)
-            );
         }
 
+        if (! in_array($voice, $this->valid_voices, true)) {
+            throw new Exception('Not a valid voice provided. Allowed voices: ' . implode(' ', $this->valid_voices));
+        }
 
         $this->voice = $voice;
     }
@@ -165,7 +212,6 @@ class WatsonTextToSpeech
     /**
      * set output path
      *
-     * @param $outputPath
      * @throws Exception
      */
     public function setOutputPath(string $outputPath): void
@@ -174,7 +220,7 @@ class WatsonTextToSpeech
             throw new Exception('Output path is empty');
         }
 
-        if (!$this->checkAndCreateDirectory($outputPath)) {
+        if (! $this->isOutputPathDirectory($outputPath)) {
             throw new Exception('Unable to create output directory');
         }
 
@@ -182,39 +228,16 @@ class WatsonTextToSpeech
     }
 
     /**
-     * check for if output_path is directory,
-     * else create path,
-     *
-     * @param $outputPath
-     * @return bool
-     */
-    private function checkAndCreateDirectory(string $outputPath): bool
-    {
-        if (is_dir($outputPath)) {
-            return true;
-        }
-
-        try {
-            if (mkdir($outputPath, 0777, true)) {
-                return true;
-            }
-        } catch (Exception $e) {
-        }
-        return false;
-    }
-
-    /**
      * text to speech serializer
      *
-     * @param $text
-     * @param string|null $format
-     * @param string|null $language
-     * @param string|null $voice
-     * @return string
      * @throws Exception
      */
-    public function runTextToSpeech(string $text, string $format = null, string $language = null, string $voice = null): string
-    {
+    public function runTextToSpeech(
+        string $text,
+        ?string $format = '',
+        ?string $language = '',
+        ?string $voice = ''
+    ): string {
         if (empty($text)) {
             throw new Exception('No text string provided');
         }
@@ -228,35 +251,31 @@ class WatsonTextToSpeech
         }
 
         if (empty($this->apiKey)) {
-            throw new Exception(
-                'API key is not set. Please set API key by passing API Key string to setApiKey()'
-            );
+            throw new Exception('API key is not set. Please set API key by passing API Key string to setApiKey()');
         }
 
         if (empty($this->watsonUrl)) {
-            throw new Exception(
-                'Url is not set. Please set Watson URL by passing Url string to setWatsonUrl()'
-            );
+            throw new Exception('Url is not set. Please set Watson URL by passing Url string to setWatsonUrl()');
         }
 
         $this->languageAndVoice = $this->language . '_' . $this->voice;
 
-        if (!in_array($this->languageAndVoice, $this->validLanguagesAndVoices)) {
+        if (! in_array($this->languageAndVoice, $this->validLanguagesAndVoices, true)) {
             throw new Exception(
                 'Not a valid language and voice combination. Allowed combinations: ' .
                 implode(', ', $this->validLanguagesAndVoices)
             );
         }
 
-        if (!empty($format)) {
+        if (! empty($format)) {
             $this->setAudioFormat($format);
         }
 
-        if (!empty($language)) {
+        if (! empty($language)) {
             $this->setLanguage($language);
         }
 
-        if (!empty($voice)) {
+        if (! empty($voice)) {
             $this->setVoice($voice);
         }
 
@@ -270,12 +289,31 @@ class WatsonTextToSpeech
     }
 
     /**
+     * check for if output_path is directory,
+     * else create path,
+     */
+    private function isOutputPathDirectory(string $outputPath): bool
+    {
+        if (is_dir($outputPath)) {
+            return true;
+        }
+
+        try {
+            if (mkdir($outputPath, 0777, true)) {
+                return true;
+            }
+        } catch (Exception $exception) {
+        }
+        return false;
+    }
+
+    /**
      * prepare output file and name
      * @throws Exception
      */
     private function prepareOutputFile(): void
     {
-        $fileName = date("Ymd-GisT", time()) . random_int(100, 999) . '.' . $this->audioFormat;
+        $fileName = date('Ymd-GisT', time()) . random_int(100, 999) . '.' . $this->audioFormat;
 
         $this->outputFilePath = rtrim($this->outputPath, '/') . '/' . $fileName;
     }
@@ -290,6 +328,10 @@ class WatsonTextToSpeech
         $textJson = json_encode(['text' => $this->text]);
 
         $outputFile = fopen($this->outputFilePath, 'w');
+
+        if ($outputFile === false) {
+            throw new Exception('There was a problem creating the file : ' . $this->outputFilePath);
+        }
 
         # url with voice
         $url = $this->watsonUrl . '/v1/synthesize?voice=' . $this->languageAndVoice;
@@ -317,13 +359,14 @@ class WatsonTextToSpeech
         fclose($outputFile);
 
         if (filesize($this->outputFilePath) < 1000) {
-            //
             // probably there is an error and error string is saved to file,
             // open file and read the string
             // if error key exists in the string, delete generated file and throw exception
-            //
             $content = file_get_contents($this->outputFilePath);
 
+            if ($content === false) {
+                throw new Exception('Error:' . $this->outputFilePath . ' could not be opened');
+            }
             $debugContent = json_decode($content, true);
 
             if (array_key_exists('error', $debugContent)) {
@@ -331,16 +374,14 @@ class WatsonTextToSpeech
                 unlink($this->outputFilePath);
 
                 // throw exception of the returned error
-                throw new Exception("Error:" . $debugContent['error'] . " code: " . $debugContent['code']);
+                throw new Exception('Error:' . $debugContent['error'] . ' code: ' . $debugContent['code']);
             }
         }
 
-        if (!$result || !is_file($this->outputFilePath)) {
+        if (! $result || ! is_file($this->outputFilePath)) {
             throw new Exception('Error creating file');
         }
 
         return $this->outputFilePath;
-
     }
-
 }

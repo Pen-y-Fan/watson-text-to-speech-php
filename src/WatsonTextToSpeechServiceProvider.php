@@ -9,7 +9,7 @@ class WatsonTextToSpeechServiceProvider extends ServiceProvider
     /**
      * Bootstrap the application services.
      */
-    public function boot()
+    public function boot(): void
     {
         /*
          * Optional methods to load your package assets
@@ -21,7 +21,7 @@ class WatsonTextToSpeechServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../config/config.php' => config_path('watson-text-to-speech-php.php'),
+                __DIR__ . '/../config/config.php' => config_path('watson-text-to-speech-php.php'),
             ], 'config');
 
             // Publishing the views.
@@ -47,14 +47,14 @@ class WatsonTextToSpeechServiceProvider extends ServiceProvider
     /**
      * Register the application services.
      */
-    public function register()
+    public function register(): void
     {
         // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'watson-text-to-speech-php');
+        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'watson-text-to-speech-php');
 
         // Register the main class to use with the facade
         $this->app->singleton('watson-text-to-speech-php', function () {
-            return new WatsonTextToSpeech;
+            return new WatsonTextToSpeech();
         });
     }
 }

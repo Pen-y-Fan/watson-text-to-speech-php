@@ -9,16 +9,10 @@ use PenYFan\WatsonTextToSpeech\WatsonTextToSpeechServiceProvider;
 
 class WatsonTextToSpeechTest extends TestCase
 {
-    protected function getPackageProviders($app)
-    {
-        return [WatsonTextToSpeechServiceProvider::class];
-    }
-
     /**
-     * @test
      * @throws Exception
      */
-    public function watsonCanSpeak()
+    public function testWatsonCanSpeak(): void
     {
         $watson = new WatsonTextToSpeech();
         $watson->setApiKey(Secret::API_KEY);
@@ -32,10 +26,9 @@ class WatsonTextToSpeechTest extends TestCase
     }
 
     /**
-     * @test
      * @throws Exception
      */
-    public function watsonCanSpeakWav()
+    public function testWatsonCanSpeakWav(): void
     {
         $watson = new WatsonTextToSpeech();
         $watson->setApiKey(Secret::API_KEY);
@@ -49,10 +42,9 @@ class WatsonTextToSpeechTest extends TestCase
     }
 
     /**
-     * @test
      * @throws Exception
      */
-    public function watsonCanSpeakKateGB()
+    public function testWatsonCanSpeakKateGB(): void
     {
         $watson = new WatsonTextToSpeech();
         $watson->setApiKey(Secret::API_KEY);
@@ -68,10 +60,9 @@ class WatsonTextToSpeechTest extends TestCase
     }
 
     /**
-     * @test
      * @throws Exception
      */
-    public function watsonTextToSpeechCanSetAudioLanguageAndVoice()
+    public function testWatsonTextToSpeechCanSetAudioLanguageAndVoice(): void
     {
         $watson = new WatsonTextToSpeech();
         $watson->setApiKey(Secret::API_KEY);
@@ -84,10 +75,9 @@ class WatsonTextToSpeechTest extends TestCase
     }
 
     /**
-     * @test
      * @throws Exception
      */
-    public function watsonUrlIsRequired()
+    public function testWatsonUrlIsRequired(): void
     {
         $watson = new WatsonTextToSpeech();
         $this->expectExceptionMessage('Watson URL not provided');
@@ -96,10 +86,9 @@ class WatsonTextToSpeechTest extends TestCase
     }
 
     /**
-     * @test
      * @throws Exception
      */
-    public function watsonUrlIsInvalid()
+    public function testWatsonUrlIsInvalid(): void
     {
         $watson = new WatsonTextToSpeech();
 
@@ -118,10 +107,9 @@ class WatsonTextToSpeechTest extends TestCase
     }
 
     /**
-     * @test
      * @throws Exception
      */
-    public function watsonApiKeyIsRequired()
+    public function testWatsonApiKeyIsRequired(): void
     {
         $watson = new WatsonTextToSpeech();
         $this->expectExceptionMessage('Watson API key not provided');
@@ -130,10 +118,9 @@ class WatsonTextToSpeechTest extends TestCase
     }
 
     /**
-     * @test
      * @throws Exception
      */
-    public function watsonAudioFormatIsRequired()
+    public function testWatsonAudioFormatIsRequired(): void
     {
         $watson = new WatsonTextToSpeech();
         $this->expectExceptionMessage('Audio format string is empty');
@@ -142,10 +129,9 @@ class WatsonTextToSpeechTest extends TestCase
     }
 
     /**
-     * @test
      * @throws Exception
      */
-    public function watsonAudioFormatIsInvalid()
+    public function testWatsonAudioFormatIsInvalid(): void
     {
         $watson = new WatsonTextToSpeech();
         $expected = 'Not a valid audio format. Allowed formats: basic flac l16 ogg ogg;codecs=opus ogg;codecs=vorbis ';
@@ -159,10 +145,9 @@ class WatsonTextToSpeechTest extends TestCase
     // setLanguage
 
     /**
-     * @test
      * @throws Exception
      */
-    public function watsonLanguageIsRequired()
+    public function testWatsonLanguageIsRequired(): void
     {
         $watson = new WatsonTextToSpeech();
         $this->expectExceptionMessage('Language string is empty');
@@ -171,10 +156,9 @@ class WatsonTextToSpeechTest extends TestCase
     }
 
     /**
-     * @test
      * @throws Exception
      */
-    public function watsonLanguageIsInvalid()
+    public function testWatsonLanguageIsInvalid(): void
     {
         $watson = new WatsonTextToSpeech();
         $expected = 'Not a valid language provided. Allowed languages: ';
@@ -188,10 +172,9 @@ class WatsonTextToSpeechTest extends TestCase
     // setVoice
 
     /**
-     * @test
      * @throws Exception
      */
-    public function watsonVoiceIsRequired()
+    public function testWatsonVoiceIsRequired(): void
     {
         $watson = new WatsonTextToSpeech();
         $this->expectExceptionMessage('Voice string is empty');
@@ -200,10 +183,9 @@ class WatsonTextToSpeechTest extends TestCase
     }
 
     /**
-     * @test
      * @throws Exception
      */
-    public function watsonVoiceIsInvalid()
+    public function testWatsonVoiceIsInvalid(): void
     {
         $watson = new WatsonTextToSpeech();
         $expected = 'Not a valid voice provided. Allowed voices: AllisonV2Voice AllisonV3Voice AllisonVoice ';
@@ -220,10 +202,9 @@ class WatsonTextToSpeechTest extends TestCase
     }
 
     /**
-     * @test
      * @throws Exception
      */
-    public function watsonOutputPathIsRequired()
+    public function testWatsonOutputPathIsRequired(): void
     {
         $watson = new WatsonTextToSpeech();
         $this->expectExceptionMessage('Output path is empty');
@@ -232,10 +213,9 @@ class WatsonTextToSpeechTest extends TestCase
     }
 
     /**
-     * @test
      * @throws Exception
      */
-    public function watsonOutputPathIsInvalid()
+    public function testWatsonOutputPathIsInvalid(): void
     {
         $watson = new WatsonTextToSpeech();
         $this->expectExceptionMessage('Unable to create output directory');
@@ -244,10 +224,9 @@ class WatsonTextToSpeechTest extends TestCase
     }
 
     /**
-     * @test
      * @throws Exception
      */
-    public function watsonOutputPathCanBeCreated()
+    public function testWatsonOutputPathCanBeCreated(): void
     {
         $path = sys_get_temp_dir() . '/' . random_int(1000, 9999);
 
@@ -260,10 +239,9 @@ class WatsonTextToSpeechTest extends TestCase
     }
 
     /**
-     * @test
      * @throws Exception
      */
-    public function watsonTextToSpeechRequiresText()
+    public function testWatsonTextToSpeechRequiresText(): void
     {
         $watson = new WatsonTextToSpeech();
         $this->expectExceptionMessage('No text string provided');
@@ -272,10 +250,9 @@ class WatsonTextToSpeechTest extends TestCase
     }
 
     /**
-     * @test
      * @throws Exception
      */
-    public function watsonTextToSpeechRequiresAnOutputPathToBeSet()
+    public function testWatsonTextToSpeechRequiresAnOutputPathToBeSet(): void
     {
         $watson = new WatsonTextToSpeech();
         $expected = 'Output path is not set. Please set output path by passing absolute path string to setOutputPath()';
@@ -286,23 +263,23 @@ class WatsonTextToSpeechTest extends TestCase
     }
 
     /**
-     * @test
      * @throws Exception
      */
-    public function watsonTextToSpeechRequiresAnAPIKeyToBeSet()
+    public function testWatsonTextToSpeechRequiresAnAPIKeyToBeSet(): void
     {
         $watson = new WatsonTextToSpeech();
         $watson->setOutputPath('/public');
 
-        $this->expectExceptionMessage('API key is not set. Please set API key by passing API Key string to setApiKey()');
+        $this->expectExceptionMessage(
+            'API key is not set. Please set API key by passing API Key string to setApiKey()'
+        );
         $watson->runTextToSpeech('No API Key');
     }
 
     /**
-     * @test
      * @throws Exception
      */
-    public function watsonTextToSpeechRequiresTheURLToBeSet()
+    public function testWatsonTextToSpeechRequiresTheURLToBeSet(): void
     {
         $watson = new WatsonTextToSpeech();
         $watson->setOutputPath('/public');
@@ -313,10 +290,9 @@ class WatsonTextToSpeechTest extends TestCase
     }
 
     /**
-     * @test
      * @throws Exception
      */
-    public function watsonApiKeyMustBeValid()
+    public function testWatsonApiKeyMustBeValid(): void
     {
         $watson = new WatsonTextToSpeech();
         $watson->setApiKey(Secret::API_KEY . 'invalid');
@@ -330,10 +306,9 @@ class WatsonTextToSpeechTest extends TestCase
     }
 
     /**
-     * @test
      * @throws Exception
      */
-    public function watsonVoiceAndLanguageCombinationMustBeValid()
+    public function testWatsonVoiceAndLanguageCombinationMustBeValid(): void
     {
         $watson = new WatsonTextToSpeech();
         $watson->setApiKey(Secret::API_KEY . 'invalid');
@@ -360,4 +335,8 @@ class WatsonTextToSpeechTest extends TestCase
         $watson->runTextToSpeech('Broken Voice and Language combination');
     }
 
+    protected function getPackageProviders($app)
+    {
+        return [WatsonTextToSpeechServiceProvider::class];
+    }
 }

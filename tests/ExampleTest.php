@@ -7,15 +7,13 @@ use PenYFan\WatsonTextToSpeech\WatsonTextToSpeechServiceProvider;
 
 class ExampleTest extends TestCase
 {
+    public function testTrueIsTrue(): void
+    {
+        $this->assertTrue(true);
+    }
 
     protected function getPackageProviders($app)
     {
         return [WatsonTextToSpeechServiceProvider::class];
-    }
-
-    /** @test */
-    public function true_is_true()
-    {
-        $this->assertTrue(true);
     }
 }

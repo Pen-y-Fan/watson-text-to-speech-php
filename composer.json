@@ -28,8 +28,11 @@
     },
     "require-dev": {
         "orchestra/testbench": "^4.0",
+        "phpstan/phpstan": "^0.12.18",
+        "phpstan/phpstan-phpunit": "^0.12.6",
         "phpunit/phpunit": "^8.0",
-        "ext-spltype": "*"
+        "symplify/easy-coding-standard": "^7.2",
+        "symplify/phpstan-extensions": "^7.2"
     },
     "autoload": {
         "psr-4": {
@@ -43,8 +46,13 @@
     },
     "scripts": {
         "test": "phpunit",
-        "test-coverage": "phpunit --coverage-html build/coverage-report"
-
+        "tests": "phpunit",
+        "test-coverage": "phpunit --coverage-html build/coverage-report",
+        "checkcode": "phpcs src tests --standard=PSR12",
+        "fixcode": "phpcbf src tests --standard=PSR12",
+        "check-cs": "ecs check src tests --ansi",
+        "fix-cs": "ecs check src tests --fix --ansi",
+        "phpstan": "phpstan analyse src tests --ansi --error-format symplify"
     },
     "config": {
         "sort-packages": true

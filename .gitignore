@@ -4,3 +4,5 @@
 /vendor
 /.phpunit.result.cache
 /tests/Secret.php
+/report.xml
+/.phpstorm.meta.php
