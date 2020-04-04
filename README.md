@@ -54,8 +54,11 @@ $watson = new WatsonTextToSpeech();
 
 #### Setting API Key
 
-Change to the API key in your Manage Credentials for Text to Speech. e.g. f5sAznhrKQyvBFFaZbtF60m5tzLbqWhyALQawBg5TjRI
- (this is the example from the tutorial - it will not work!)
+Change to the API key in your Manage Credentials for Text to Speech.
+ 
+- e.g. f5sAznhrKQyvBFFaZbtF60m5tzLbqWhyALQawBg5TjRI
+
+**Note:** this is the example from the tutorial - it will not work!
 
 ```php
 $apiKey = 'f5sAznhrKQyvBFFaZbtF60m5tzLbqWhyALQawBg5TjRI';
@@ -269,6 +272,21 @@ zh-CN_WangWeiVoice | **zh-CN** | **WangWeiVoice** | male | Wang Wei: Chinese (Ma
 zh-CN_ZhangJingVoice | **zh-CN** | **ZhangJingVoice** | female | Zhang Jing: Chinese (Mandarin) female voice.
 
 ### Testing
+
+#### Rename AbstractSecretExample
+
+Rename:
+
+- File: AbstractSecretExample.php to AbstractSecret.php
+- Class: AbstractSecretto AbstractSecret
+- Add the API key: 
+  - Open <https://cloud.ibm.com/> and sign in.
+  - Click Services 
+  - Click Text to Speech (under services)
+  - under Credentials click Show credentials. The API key will be shown.
+  - Copy and paste the key into the constant API_KEY 
+
+#### Run all the tests
 
 PHPUnit is used to run tests, via a composer script. From the root of the project run:
 

@@ -20,6 +20,18 @@ parameters:
         Symplify\CodingStandard\Sniffs\Naming\AbstractClassNameSniff:
             - tests/TestCase.php
 
+        # This is the Laravel standard
+        Symplify\CodingStandard\Sniffs\CleanCode\ForbiddenStaticFunctionSniff:
+            - src/WatsonTextToSpeechFacade.php
+
+        # Ignore for now TODO: refactor all the generic 'Exceptions'
+        Symplify\CodingStandard\Sniffs\Architecture\ExplicitExceptionSniff: null
+
+        # File WatsonTextToSpeechServiceProvider.php is currently an outline with commented out code
+        # TODO: Once the Laravel SsrvicePrivider has been created remove this skip
+        Symplify\CodingStandard\Sniffs\Debug\CommentedOutCodeSniff:
+            - src/WatsonTextToSpeechServiceProvider.php
+
 services:
     Symplify\CodingStandard\Sniffs\CleanCode\CognitiveComplexitySniff:
         max_cognitive_complexity: 8
