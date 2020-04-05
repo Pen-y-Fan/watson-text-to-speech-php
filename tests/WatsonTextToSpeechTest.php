@@ -290,7 +290,9 @@ class WatsonTextToSpeechTest extends TestCase
         $watson->setOutputPath('/public');
         $watson->setApiKey(AbstractSecret::API_KEY);
 
-        $this->expectExceptionMessage('Url is not set. Please set Watson URL by passing Url string to setWatsonUrl()');
+        $this->expectExceptionMessage(
+            'Url is not set. Please set Watson URL by passing Url string to setWatsonUrl()'
+        );
         $watson->runTextToSpeech('No Url');
     }
 

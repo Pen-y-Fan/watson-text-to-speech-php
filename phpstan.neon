@@ -30,6 +30,9 @@ parameters:
             message: '#Method App\\Http\\Middleware\\Authenticate\:\:redirectTo\(\) should return string\|null but return statement is missing#'
             path: app\Http\Middleware\Authenticate.php
 
+        # TODO: API_KEY will need to be refactored.
+        - '#Access to constant API_KEY on an unknown class PenYFan\\WatsonTextToSpeech\\Tests\\AbstractSecret#'
+
     # buggy
 
     # mixed
