@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PenYFan\WatsonTextToSpeech;
 
 use Exception;
@@ -128,7 +130,7 @@ class WatsonTextToSpeech
         $trimUrl = rtrim($trimUrl, '/v1/synthesize');
 
         if (! in_array($trimUrl, $this->watsonUrls, true)) {
-            throw new Exception('Not a valid Watson URL. Allowed URLs: ' . implode(' ', $this->watsonUrls));
+            throw new Exception('Not a valid Watson URL. Allowed URLs: ' . implode(', ', $this->watsonUrls));
         }
 
         $this->watsonUrl = $trimUrl;
@@ -162,7 +164,7 @@ class WatsonTextToSpeech
 
         if (! in_array($format, $this->valid_audio_formats, true)) {
             throw new Exception(
-                'Not a valid audio format. Allowed formats: ' . implode(' ', $this->valid_audio_formats)
+                'Not a valid audio format. Allowed formats: ' . implode(', ', $this->valid_audio_formats)
             );
         }
 
@@ -183,7 +185,7 @@ class WatsonTextToSpeech
 
         if (! in_array($language, $this->valid_language, true)) {
             throw new Exception(
-                'Not a valid language provided. Allowed languages: ' . implode(' ', $this->valid_language)
+                'Not a valid language provided. Allowed languages: ' . implode(', ', $this->valid_language)
             );
         }
 
@@ -203,7 +205,7 @@ class WatsonTextToSpeech
         }
 
         if (! in_array($voice, $this->valid_voices, true)) {
-            throw new Exception('Not a valid voice provided. Allowed voices: ' . implode(' ', $this->valid_voices));
+            throw new Exception('Not a valid voice provided. Allowed voices: ' . implode(', ', $this->valid_voices));
         }
 
         $this->voice = $voice;
@@ -244,42 +246,13 @@ class WatsonTextToSpeech
 
         $this->text = $text;
 
-        if (empty($this->outputPath)) {
-            throw new Exception(
-                'Output path is not set. Please set output path by passing absolute path string to setOutputPath()'
-            );
+        try {
+            $this->checkMinimumParametersSet();
+            $this->setOptionalParamaters($format, $language, $voice);
+            $this->prepareOutputFile();
+        } catch (Exception $exception) {
+            throw new Exception($exception->getMessage());
         }
-
-        if (empty($this->apiKey)) {
-            throw new Exception('API key is not set. Please set API key by passing API Key string to setApiKey()');
-        }
-
-        if (empty($this->watsonUrl)) {
-            throw new Exception('Url is not set. Please set Watson URL by passing Url string to setWatsonUrl()');
-        }
-
-        $this->languageAndVoice = $this->language . '_' . $this->voice;
-
-        if (! in_array($this->languageAndVoice, $this->validLanguagesAndVoices, true)) {
-            throw new Exception(
-                'Not a valid language and voice combination. Allowed combinations: ' .
-                implode(', ', $this->validLanguagesAndVoices)
-            );
-        }
-
-        if (! empty($format)) {
-            $this->setAudioFormat($format);
-        }
-
-        if (! empty($language)) {
-            $this->setLanguage($language);
-        }
-
-        if (! empty($voice)) {
-            $this->setVoice($voice);
-        }
-
-        $this->prepareOutputFile();
 
         try {
             return $this->processWatsonTextToSpeechCurl();
@@ -305,6 +278,57 @@ class WatsonTextToSpeech
         } catch (Exception $exception) {
         }
         return false;
+    }
+
+    /**
+     * Check the minimum set of required parameters have been set before Watson is run.
+     *
+     * @throws Exception
+     */
+    private function checkMinimumParametersSet(): void
+    {
+        if (empty($this->outputPath)) {
+            throw new Exception(
+                'Output path is not set. Please set output path by passing absolute path string to setOutputPath()'
+            );
+        }
+
+        if (empty($this->apiKey)) {
+            throw new Exception('API key is not set. Please set API key by passing API Key string to setApiKey()');
+        }
+
+        if (empty($this->watsonUrl)) {
+            throw new Exception('Url is not set. Please set Watson URL by passing Url string to setWatsonUrl()');
+        }
+
+        $this->languageAndVoice = $this->language . '_' . $this->voice;
+
+        if (! in_array($this->languageAndVoice, $this->validLanguagesAndVoices, true)) {
+            throw new Exception(
+                'Not a valid language and voice combination. Allowed combinations: ' .
+                implode(', ', $this->validLanguagesAndVoices)
+            );
+        }
+    }
+
+    /**
+     * Set the optional parameters before Watson is run.
+     *
+     * @throws Exception
+     */
+    private function setOptionalParamaters(?string $format, ?string $language, ?string $voice): void
+    {
+        if (! empty($format)) {
+            $this->setAudioFormat($format);
+        }
+
+        if (! empty($language)) {
+            $this->setLanguage($language);
+        }
+
+        if (! empty($voice)) {
+            $this->setVoice($voice);
+        }
     }
 
     /**

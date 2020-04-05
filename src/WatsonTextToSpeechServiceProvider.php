@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PenYFan\WatsonTextToSpeech;
 
 use Illuminate\Support\ServiceProvider;
