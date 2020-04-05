@@ -20,11 +20,11 @@ class WatsonTextToSpeechFeatureTest extends TestCase
         $watson->setApiKey(AbstractSecret::API_KEY);
         $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/v1/synthesize/');
 
-        $path = '/public';
+        $path = sys_get_temp_dir();
         $watson->setOutputPath($path);
         $file = $watson->runTextToSpeech('Working');
 
-        $this->assertStringStartsWith(sys_get_temp_dir(), $file);
+        $this->assertStringStartsWith($path, $file);
     }
 
     /**
@@ -36,11 +36,12 @@ class WatsonTextToSpeechFeatureTest extends TestCase
         $watson->setApiKey(AbstractSecret::API_KEY);
         $watson->setAudioFormat('wav');
         $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/v1/synthesize/');
-        $watson->setOutputPath(sys_get_temp_dir());
+        $path = sys_get_temp_dir();
+        $watson->setOutputPath($path);
 
         $file = $watson->runTextToSpeech('W.A.V.');
 
-        $this->assertStringStartsWith('/public', $file);
+        $this->assertStringStartsWith($path, $file);
     }
 
     /**
@@ -54,11 +55,12 @@ class WatsonTextToSpeechFeatureTest extends TestCase
         $watson->setVoice('KateVoice');
 
         $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com');
-        $watson->setOutputPath('/public');
+        $path = sys_get_temp_dir();
+        $watson->setOutputPath($path);
 
         $file = $watson->runTextToSpeech('British');
 
-        $this->assertStringStartsWith('/public', $file);
+        $this->assertStringStartsWith($path, $file);
     }
 
     /**
@@ -68,12 +70,13 @@ class WatsonTextToSpeechFeatureTest extends TestCase
     {
         $watson = new WatsonTextToSpeech();
         $watson->setApiKey(AbstractSecret::API_KEY);
-        $watson->setOutputPath('/public');
+        $path = sys_get_temp_dir();
+        $watson->setOutputPath($path);
         $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com');
 
         $file = $watson->runTextToSpeech('français', 'wav', 'fr-FR', 'ReneeV3Voice');
 
-        $this->assertStringStartsWith('/public/', $file);
+        $this->assertStringStartsWith($path, $file);
     }
 
     /**
@@ -85,7 +88,7 @@ class WatsonTextToSpeechFeatureTest extends TestCase
         $watson->setApiKey(AbstractSecret::API_KEY . 'invalid');
         $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com');
 
-        $path = '/public';
+        $path = sys_get_temp_dir();
         $watson->setOutputPath($path);
         $this->expectExceptionMessage('Error:Unauthorized code: 401');
 
