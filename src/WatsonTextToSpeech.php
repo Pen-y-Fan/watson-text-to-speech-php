@@ -112,6 +112,11 @@ class WatsonTextToSpeech
     private $text;
 
     /**
+     * @var string
+     */
+    private $fileExtension = 'mp3';
+
+    /**
      * set watson url
      * The url can be in the format:
      * https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/v1/synthesize/
@@ -170,6 +175,13 @@ class WatsonTextToSpeech
         }
 
         $this->audioFormat = $format;
+
+        $pos = strpos($this->audioFormat, ';');
+        if ($pos !== false) {
+            $this->fileExtension = substr($this->audioFormat, 0, $pos);
+        }
+
+        $this->fileExtension = $this->audioFormat;
     }
 
     /**
@@ -258,6 +270,48 @@ class WatsonTextToSpeech
     }
 
     /**
+     * Language and Voice and be set all three properties $languageAndVoice, $language and $voice
+     * If no parameter is received it is assumed languageAndVoice needs to be set based on the properties
+     * $language and $voice
+     *
+     * @throws Exception
+     */
+    public function setLanguageAndVoice(?string $languageAndVoice = ''): void
+    {
+        try {
+            if (empty($languageAndVoice)) {
+                $this->languageAndVoice = $this->language . '_' . $this->voice;
+                $this->validateLanguageAndVoice();
+                return;
+            }
+
+            $this->languageAndVoice = $languageAndVoice;
+            $this->validateLanguageAndVoice();
+
+            $language = substr($this->languageAndVoice, 0, 5);
+            $voice = substr($this->languageAndVoice, 6);
+
+            $this->setLanguage($language);
+            $this->setVoice($voice);
+        } catch (Exception $exception) {
+            throw new Exception($exception->getMessage());
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function validateLanguageAndVoice(): void
+    {
+        if (! in_array($this->languageAndVoice, $this->validLanguagesAndVoices, true)) {
+            throw new Exception(
+                'Not a valid language and voice combination. Allowed combinations: ' .
+                implode(', ', $this->validLanguagesAndVoices)
+            );
+        }
+    }
+
+    /**
      * check for if output_path is directory,
      * else create path,
      */
@@ -285,7 +339,7 @@ class WatsonTextToSpeech
     {
         if (empty($this->outputPath)) {
             throw new Exception(
-                'Output path is not set. Please set output path by passing absolute path string to setOutputPath()'
+                'Output path is not set. Please set an output path by passing absolute path string to setOutputPath()'
             );
         }
 
@@ -297,14 +351,7 @@ class WatsonTextToSpeech
             throw new Exception('Url is not set. Please set Watson URL by passing Url string to setWatsonUrl()');
         }
 
-        $this->languageAndVoice = $this->language . '_' . $this->voice;
-
-        if (! in_array($this->languageAndVoice, $this->validLanguagesAndVoices, true)) {
-            throw new Exception(
-                'Not a valid language and voice combination. Allowed combinations: ' .
-                implode(', ', $this->validLanguagesAndVoices)
-            );
-        }
+        $this->setLanguageAndVoice();
     }
 
     /**
@@ -312,7 +359,7 @@ class WatsonTextToSpeech
      *
      * @throws Exception
      */
-    private function setOptionalParamaters(?string $format, ?string $language, ?string $voice): void
+    private function setOptionalParamaters(?string $format = '', ?string $language = '', ?string $voice = ''): void
     {
         if (! empty($format)) {
             $this->setAudioFormat($format);
@@ -333,7 +380,7 @@ class WatsonTextToSpeech
      */
     private function prepareOutputFile(): void
     {
-        $fileName = date('Ymd-GisT', time()) . random_int(100, 999) . '.' . $this->audioFormat;
+        $fileName = date('Ymd-GisT', time()) . random_int(100, 999) . '.' . $this->fileExtension;
 
         $this->outputFilePath = rtrim($this->outputPath, '/') . '/' . $fileName;
     }

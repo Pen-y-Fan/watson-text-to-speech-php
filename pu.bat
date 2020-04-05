@@ -1,2 +1,2 @@
-composer tests:unit
+composer test:unit
 

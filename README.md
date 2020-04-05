@@ -44,8 +44,8 @@ $watson->setOutputPath('/public');
 $file = $watson->runTextToSpeech('This is the text you want to convert to speech');
 ```
 
-This will save a mp3 (default) in the /public folder (or the folder you specified). The $file variable will confirm the
- path.
+This will save a **mp3** (default) in the **/public** folder (or the folder you specified). The $file variable will
+ confirm the path and filename.
 
 ### Detailed explanation
 
@@ -152,9 +152,13 @@ For full details see the
 
 ##### Set Language
 
+The language can be set as follows:
+
 ```php
 $watson->setLanguage('en-US');
 ```
+
+The language and voice combination must match the name is the list.
 
 * _allowed languages:_ [See List](#supported-language-and-voice-list)
   * ar-AR
@@ -175,9 +179,13 @@ $watson->setLanguage('en-US');
 
 ##### Set Voice
 
-```
+The voice can be set as follows:
+
+```php
 $watson->setVoice('MichaelVoice');
 ``` 
+
+The language and voice combination must match the name is the list.
 
 * _allowed voices:_  [See List](#supported-language-and-voice-list)
   * AllisonV2Voice
@@ -225,6 +233,16 @@ $watson->setVoice('MichaelVoice');
   * ZhangJingVoice
 * _default:_ `MichaelVoice`
 ---
+
+##### Set Voice
+
+Alternatively the language and voice can be set as follows:
+
+```php
+$watson->setLanguageAndVoice('de-DE_BirgitV2Voice');
+``` 
+
+* _default:_ `en-US_MichaelVoice`
 
 ### Supported language and voice list
 
@@ -280,25 +298,98 @@ zh-CN_ZhangJingVoice | **zh-CN** | **ZhangJingVoice** | female | Zhang Jing: Chi
 
 ### Testing
 
-#### Rename AbstractSecretExample
+#### Unit Tests
 
-Rename:
+PHPUnit is used to run tests, via a composer script. To run the unit tests, From the root of the project run:
 
-- File: AbstractSecretExample.php to AbstractSecret.php
-- Class: AbstractSecretto AbstractSecret
+```shell script
+composer test:unit
+```
+
+Unit tests do not perform API calls, the **API_KEY** does not need to be set to run the unit tests.
+
+#### Run all the tests
+
+To run the full test suite, including unit and feature tests, which include calling the IBM Watson API. The **API_KEY**
+ needs to be set in tests/**AbstractSecret.php**. For security reasons this file is excluded from Git and Github:
+
+- Rename File: tests/**AbstractSecretExample.php** to tests/**AbstractSecret.php**
+- Open the **AbstractSecret.php** file 
+- Rename Class: **AbstractSecretExample** to **AbstractSecret**
 - Add the API key: 
   - Open <https://cloud.ibm.com/> and sign in.
   - Click Services 
   - Click Text to Speech (under services)
   - under Credentials click Show credentials. The API key will be shown.
-  - Copy and paste the key into the constant API_KEY 
-
-#### Run all the tests
-
-PHPUnit is used to run tests, via a composer script. From the root of the project run:
-
+  - Copy and paste the key into the constant **API_KEY**
+  
 ```shell script
 composer test
+```
+
+On Windows a batch file has been created, similar to an alias on Linux/Mac, the same PHPUnit `composer test` can be run
+
+```shell script
+pu
+```
+
+#### Tests with Coverage Report
+
+To run all test and generate a coverage report run:
+
+```shell script
+composer test-coverage
+```
+
+The coverage report is created in /builds, it is best viewed by opening **index.html** in your browser.
+
+### Code Standard
+
+Easy Coding Standard (ECS) is used to check for style and code standards, PSR-12 is used.
+
+#### Check Code
+
+To check code, but not fix an errors:
+
+```shell script
+composer check-cs
+``` 
+
+On Windows a batch file has been created, similar to an alias on Linux/Mac, the same PHPUnit `composer check-cs` can
+ be run:
+
+```shell script
+cc
+```
+
+#### Fix Code
+
+May code fixes are automatically provided by ECS, if advised to run --fix, the following script can be run.
+
+```shell script
+composer fix-cs
+```
+
+On Windows a batch file has been created, similar to an alias on Linux/Mac, the same PHPUnit `composer fix-cs` can
+ be run:
+
+```shell script
+fc
+```
+
+### Static Analysis
+
+PHPStan is used to run static analysis checks:
+
+```shell script
+composer phpstan
+```
+
+On Windows a batch file has been created, similar to an alias on Linux/Mac, the same PHPUnit `composer phpstan` can
+ be run:
+
+```shell script
+ps
 ```
 
 ### Changelog
