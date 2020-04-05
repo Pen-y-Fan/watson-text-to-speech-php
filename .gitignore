@@ -6,3 +6,4 @@
 /report.xml
 /.phpstorm.meta.php
 /tests/AbstractSecret.php
+/.env
