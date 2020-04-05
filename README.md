@@ -1,5 +1,6 @@
 # Watson Text To Speech using PHP
 
+[![PHPUnit Tests](https://github.com/Pen-y-Fan/watson-text-to-speech-php/workflows/tests/badge.svg)](https://github.com/Pen-y-Fan/watson-text-to-speech-php/)
 [![PHP Stan](https://github.com/Pen-y-Fan/watson-text-to-speech-php/workflows/phpstan/badge.svg)](https://github.com/Pen-y-Fan/watson-text-to-speech-php/)
 [![PHP Stan](https://img.shields.io/badge/PHPStan-level%207-brightgreen.svg?style=flat)](https://github.com/Pen-y-Fan/watson-text-to-speech-php/)
 [![ECS](https://github.com/Pen-y-Fan/watson-text-to-speech-php/workflows/ecs/badge.svg)](https://github.com/Pen-y-Fan/watson-text-to-speech-php/)

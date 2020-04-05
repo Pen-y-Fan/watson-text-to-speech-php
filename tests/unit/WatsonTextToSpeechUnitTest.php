@@ -2,80 +2,14 @@
 
 declare(strict_types=1);
 
-namespace PenYFan\WatsonTextToSpeech\Tests;
+namespace PenYFan\WatsonTextToSpeech\Tests\unit;
 
 use Exception;
 use Orchestra\Testbench\TestCase;
 use PenYFan\WatsonTextToSpeech\WatsonTextToSpeech;
-use PenYFan\WatsonTextToSpeech\WatsonTextToSpeechServiceProvider;
 
-class WatsonTextToSpeechTest extends TestCase
+class WatsonTextToSpeechUnitTest extends TestCase
 {
-    /**
-     * @throws Exception
-     */
-    public function testWatsonCanSpeak(): void
-    {
-        $watson = new WatsonTextToSpeech();
-        $watson->setApiKey(AbstractSecret::API_KEY);
-        $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/v1/synthesize/');
-
-        $path = '/public';
-        $watson->setOutputPath($path);
-        $file = $watson->runTextToSpeech('Working');
-
-        $this->assertStringStartsWith('/public', $file);
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function testWatsonCanSpeakWav(): void
-    {
-        $watson = new WatsonTextToSpeech();
-        $watson->setApiKey(AbstractSecret::API_KEY);
-        $watson->setAudioFormat('wav');
-        $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/v1/synthesize/');
-        $watson->setOutputPath('/public');
-
-        $file = $watson->runTextToSpeech('W.A.V.');
-
-        $this->assertStringStartsWith('/public', $file);
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function testWatsonCanSpeakKateGB(): void
-    {
-        $watson = new WatsonTextToSpeech();
-        $watson->setApiKey(AbstractSecret::API_KEY);
-        $watson->setLanguage('en-GB');
-        $watson->setVoice('KateVoice');
-
-        $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com');
-        $watson->setOutputPath('/public');
-
-        $file = $watson->runTextToSpeech('British');
-
-        $this->assertStringStartsWith('/public', $file);
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function testWatsonTextToSpeechCanSetAudioLanguageAndVoice(): void
-    {
-        $watson = new WatsonTextToSpeech();
-        $watson->setApiKey(AbstractSecret::API_KEY);
-        $watson->setOutputPath('/public');
-        $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com');
-
-        $file = $watson->runTextToSpeech('français', 'wav', 'fr-FR', 'ReneeV3Voice');
-
-        $this->assertStringStartsWith('/public/', $file);
-    }
-
     /**
      * @throws Exception
      */
@@ -140,12 +74,12 @@ class WatsonTextToSpeechTest extends TestCase
         $expected = 'Not a valid audio format. Allowed formats: basic, flac, l16, ogg, ogg;codecs=opus, ';
         $expected .= 'ogg;codecs=vorbis, mp3, mpeg, mulaw, wav, webm, webm;codecs=opus, webm;codecs=vorbi';
 
+        $watson->setAudioFormat('wav');
+
         $this->expectExceptionMessage($expected);
 
         $watson->setAudioFormat('mp4');
     }
-
-    // setLanguage
 
     /**
      * @throws Exception
@@ -218,6 +152,7 @@ class WatsonTextToSpeechTest extends TestCase
     }
 
     /**
+     * @requires OSFAMILY Windows
      * @throws Exception
      */
     public function testWatsonOutputPathIsInvalid(): void
@@ -273,7 +208,7 @@ class WatsonTextToSpeechTest extends TestCase
     public function testWatsonTextToSpeechRequiresAnAPIKeyToBeSet(): void
     {
         $watson = new WatsonTextToSpeech();
-        $watson->setOutputPath('/public');
+        $watson->setOutputPath(sys_get_temp_dir());
 
         $this->expectExceptionMessage(
             'API key is not set. Please set API key by passing API Key string to setApiKey()'
@@ -284,43 +219,12 @@ class WatsonTextToSpeechTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testWatsonTextToSpeechRequiresTheURLToBeSet(): void
-    {
-        $watson = new WatsonTextToSpeech();
-        $watson->setOutputPath('/public');
-        $watson->setApiKey(AbstractSecret::API_KEY);
-
-        $this->expectExceptionMessage(
-            'Url is not set. Please set Watson URL by passing Url string to setWatsonUrl()'
-        );
-        $watson->runTextToSpeech('No Url');
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function testWatsonApiKeyMustBeValid(): void
-    {
-        $watson = new WatsonTextToSpeech();
-        $watson->setApiKey(AbstractSecret::API_KEY . 'invalid');
-        $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com');
-
-        $path = '/public';
-        $watson->setOutputPath($path);
-        $this->expectExceptionMessage('Error:Unauthorized code: 401');
-
-        $watson->runTextToSpeech('Broken APIi');
-    }
-
-    /**
-     * @throws Exception
-     */
     public function testWatsonVoiceAndLanguageCombinationMustBeValid(): void
     {
         $watson = new WatsonTextToSpeech();
-        $watson->setApiKey(AbstractSecret::API_KEY . 'invalid');
+        $watson->setApiKey('invalid');
         $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com');
-        $watson->setOutputPath('/public');
+        $watson->setOutputPath(sys_get_temp_dir());
         $watson->setLanguage('en-US');
         $watson->setVoice('KateVoice');
 
@@ -342,8 +246,18 @@ class WatsonTextToSpeechTest extends TestCase
         $watson->runTextToSpeech('Broken Voice and Language combination');
     }
 
-    protected function getPackageProviders($app)
+    /**
+     * @throws Exception
+     */
+    public function testWatsonTextToSpeechRequiresTheURLToBeSet(): void
     {
-        return [WatsonTextToSpeechServiceProvider::class];
+        $watson = new WatsonTextToSpeech();
+        $watson->setOutputPath(sys_get_temp_dir());
+        $watson->setApiKey('invalid');
+
+        $this->expectExceptionMessage(
+            'Url is not set. Please set Watson URL by passing Url string to setWatsonUrl()'
+        );
+        $watson->runTextToSpeech('No Url');
     }
 }

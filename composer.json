@@ -46,8 +46,9 @@
     },
     "scripts": {
         "test": "phpunit",
+        "tests:unit": "phpunit --filter 'WatsonTextToSpeechUnitTest'",
         "tests": "phpunit",
-        "test-coverage": "phpunit --coverage-html build/coverage-report",
+        "test-coverage": "phpunit --coverage-html build/coverage",
         "checkcode": "phpcs src tests --standard=PSR12",
         "fixcode": "phpcbf src tests --standard=PSR12",
         "check-cs": "ecs check src tests --ansi",
