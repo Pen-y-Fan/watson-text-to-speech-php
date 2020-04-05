@@ -6,6 +6,8 @@
 [![Easy Coding Standard](https://img.shields.io/badge/ECS-level%208-brightgreen.svg?style=flat)](https://github.com/Pen-y-Fan/watson-text-to-speech-php/)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/pen-y-fan/watson-text-to-speech-php.svg?style=flat-square)](https://packagist.org/packages/pen-y-fan/watson-text-to-speech-php)
 [![Total Downloads](https://img.shields.io/packagist/dt/pen-y-fan/watson-text-to-speech-php.svg?style=flat-square)](https://packagist.org/packages/pen-y-fan/watson-text-to-speech-php)
+[![License](https://poser.pugx.org/silber/bouncer/license.svg)](https://github.com/Pen-y-Fan/watson-text-to-speech-php/LICENSE.md)
+
 <!-- [![Build Status](https://img.shields.io/travis/pen-y-fan/watson-text-to-speech-php/master.svg?style=flat-square)](https://travis-ci.org/pen-y-fan/watson-text-to-speech-php) -->
 <!-- [![Quality Score](https://img.shields.io/scrutinizer/g/pen-y-fan/watson-text-to-speech-php.svg?style=flat-square)](https://scrutinizer-ci.com/g/pen-y-fan/watson-text-to-speech-php) -->
 
