@@ -34,5 +34,5 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 
-      - name: Static analysis
+      - name: Unit Tests
         run: composer run-script tests:unit
