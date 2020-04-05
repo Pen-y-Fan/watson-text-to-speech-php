@@ -1,4 +1,4 @@
-name: PHP Composer
+name: ecs
 
 on: [push, pull_request]
 
@@ -33,9 +33,6 @@ jobs:
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
-
-      - name: Static analysis
-        run: composer run-script phpstan
 
       - name: Static code quality
         run: composer run-script check-cs

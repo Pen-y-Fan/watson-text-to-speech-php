@@ -1,9 +1,13 @@
 # Watson Text To Speech using PHP
 
+[![PHP Stan](https://github.com/Pen-y-Fan/watson-text-to-speech-php/workflows/phpstan/badge.svg)](https://github.com/Pen-y-Fan/watson-text-to-speech-php/)
+[![PHP Stan](https://img.shields.io/badge/PHPStan-level%207-brightgreen.svg?style=flat)](https://github.com/Pen-y-Fan/watson-text-to-speech-php/)
+[![ECS](https://github.com/Pen-y-Fan/watson-text-to-speech-php/workflows/ecs/badge.svg)](https://github.com/Pen-y-Fan/watson-text-to-speech-php/)
+[![Easy Coding Standard](https://img.shields.io/badge/ECS-level%208-brightgreen.svg?style=flat)](https://github.com/Pen-y-Fan/watson-text-to-speech-php/)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/pen-y-fan/watson-text-to-speech-php.svg?style=flat-square)](https://packagist.org/packages/pen-y-fan/watson-text-to-speech-php)
-[![Build Status](https://img.shields.io/travis/pen-y-fan/watson-text-to-speech-php/master.svg?style=flat-square)](https://travis-ci.org/pen-y-fan/watson-text-to-speech-php)
-[![Quality Score](https://img.shields.io/scrutinizer/g/pen-y-fan/watson-text-to-speech-php.svg?style=flat-square)](https://scrutinizer-ci.com/g/pen-y-fan/watson-text-to-speech-php)
 [![Total Downloads](https://img.shields.io/packagist/dt/pen-y-fan/watson-text-to-speech-php.svg?style=flat-square)](https://packagist.org/packages/pen-y-fan/watson-text-to-speech-php)
+<!-- [![Build Status](https://img.shields.io/travis/pen-y-fan/watson-text-to-speech-php/master.svg?style=flat-square)](https://travis-ci.org/pen-y-fan/watson-text-to-speech-php) -->
+<!-- [![Quality Score](https://img.shields.io/scrutinizer/g/pen-y-fan/watson-text-to-speech-php.svg?style=flat-square)](https://scrutinizer-ci.com/g/pen-y-fan/watson-text-to-speech-php) -->
 
 This package allows text to be converted to speech using the IBM Watson API.
 
