@@ -152,6 +152,7 @@ class WatsonTextToSpeechUnitTest extends TestCase
     }
 
     /**
+     * @requires OSFAMILY Windows
      * @throws Exception
      */
     public function testWatsonOutputPathIsInvalid(): void
