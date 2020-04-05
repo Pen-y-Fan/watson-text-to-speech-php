@@ -38,4 +38,4 @@ jobs:
         run: composer run-script phpstan
 
       - name: Static code quality
-        run: composer run-script check-cc
+        run: composer run-script check-cs
