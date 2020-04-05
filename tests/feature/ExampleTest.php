@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PenYFan\WatsonTextToSpeech\Tests;
+namespace PenYFan\WatsonTextToSpeech\Tests\feature;
 
 use Orchestra\Testbench\TestCase;
 use PenYFan\WatsonTextToSpeech\WatsonTextToSpeechServiceProvider;
