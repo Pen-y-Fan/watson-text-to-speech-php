@@ -10,7 +10,7 @@ jobs:
       matrix:
         php-versions: ["7.2", "7.3", "7.4"]
 
-    name: PHP ${{ matrix.php-versions }} PHPStan
+    name: PHP ${{ matrix.php-versions }} PHPUnit Unit tests
 
     steps:
       - name: Checkout
