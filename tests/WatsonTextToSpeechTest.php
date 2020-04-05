@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PenYFan\WatsonTextToSpeech\Tests;
 
 use Exception;
@@ -15,7 +17,7 @@ class WatsonTextToSpeechTest extends TestCase
     public function testWatsonCanSpeak(): void
     {
         $watson = new WatsonTextToSpeech();
-        $watson->setApiKey(Secret::API_KEY);
+        $watson->setApiKey(AbstractSecret::API_KEY);
         $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/v1/synthesize/');
 
         $path = '/public';
@@ -31,7 +33,7 @@ class WatsonTextToSpeechTest extends TestCase
     public function testWatsonCanSpeakWav(): void
     {
         $watson = new WatsonTextToSpeech();
-        $watson->setApiKey(Secret::API_KEY);
+        $watson->setApiKey(AbstractSecret::API_KEY);
         $watson->setAudioFormat('wav');
         $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/v1/synthesize/');
         $watson->setOutputPath('/public');
@@ -47,7 +49,7 @@ class WatsonTextToSpeechTest extends TestCase
     public function testWatsonCanSpeakKateGB(): void
     {
         $watson = new WatsonTextToSpeech();
-        $watson->setApiKey(Secret::API_KEY);
+        $watson->setApiKey(AbstractSecret::API_KEY);
         $watson->setLanguage('en-GB');
         $watson->setVoice('KateVoice');
 
@@ -65,7 +67,7 @@ class WatsonTextToSpeechTest extends TestCase
     public function testWatsonTextToSpeechCanSetAudioLanguageAndVoice(): void
     {
         $watson = new WatsonTextToSpeech();
-        $watson->setApiKey(Secret::API_KEY);
+        $watson->setApiKey(AbstractSecret::API_KEY);
         $watson->setOutputPath('/public');
         $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com');
 
@@ -93,12 +95,12 @@ class WatsonTextToSpeechTest extends TestCase
         $watson = new WatsonTextToSpeech();
 
         $expected = 'Not a valid Watson URL. Allowed URLs: ';
-        $expected .= 'https://api.au-syd.text-to-speech.watson.cloud.ibm.com ';
-        $expected .= 'https://api.eu-gb.text-to-speech.watson.cloud.ibm.com ';
-        $expected .= 'https://api.eu-de.text-to-speech.watson.cloud.ibm.com ';
-        $expected .= 'https://api.jp-tok.text-to-speech.watson.cloud.ibm.com ';
-        $expected .= 'https://api.kr-seo.text-to-speech.watson.cloud.ibm.com ';
-        $expected .= 'https://api.us-east.text-to-speech.watson.cloud.ibm.com ';
+        $expected .= 'https://api.au-syd.text-to-speech.watson.cloud.ibm.com, ';
+        $expected .= 'https://api.eu-gb.text-to-speech.watson.cloud.ibm.com, ';
+        $expected .= 'https://api.eu-de.text-to-speech.watson.cloud.ibm.com, ';
+        $expected .= 'https://api.jp-tok.text-to-speech.watson.cloud.ibm.com, ';
+        $expected .= 'https://api.kr-seo.text-to-speech.watson.cloud.ibm.com, ';
+        $expected .= 'https://api.us-east.text-to-speech.watson.cloud.ibm.com, ';
         $expected .= 'https://api.us-south.text-to-speech.watson.cloud.ibm.com';
 
         $this->expectExceptionMessage($expected);
@@ -134,8 +136,9 @@ class WatsonTextToSpeechTest extends TestCase
     public function testWatsonAudioFormatIsInvalid(): void
     {
         $watson = new WatsonTextToSpeech();
-        $expected = 'Not a valid audio format. Allowed formats: basic flac l16 ogg ogg;codecs=opus ogg;codecs=vorbis ';
-        $expected .= 'mp3 mpeg mulaw wav webm webm;codecs=opus webm;codecs=vorbi';
+
+        $expected = 'Not a valid audio format. Allowed formats: basic, flac, l16, ogg, ogg;codecs=opus, ';
+        $expected .= 'ogg;codecs=vorbis, mp3, mpeg, mulaw, wav, webm, webm;codecs=opus, webm;codecs=vorbi';
 
         $this->expectExceptionMessage($expected);
 
@@ -162,8 +165,8 @@ class WatsonTextToSpeechTest extends TestCase
     {
         $watson = new WatsonTextToSpeech();
         $expected = 'Not a valid language provided. Allowed languages: ';
-        $expected .= 'ar-AR de-DE en-GB en-US es-ES es-LA es-US ';
-        $expected .= 'fr-FR it-IT ja-JP nl-NL pt-BR zh-CN';
+        $expected .= 'ar-AR, de-DE, en-GB, en-US, es-ES, es-LA, es-US, ';
+        $expected .= 'fr-FR, it-IT, ja-JP, nl-NL, pt-BR, zh-CN';
         $this->expectExceptionMessage($expected);
 
         $watson->setLanguage('uk-UK');
@@ -188,13 +191,15 @@ class WatsonTextToSpeechTest extends TestCase
     public function testWatsonVoiceIsInvalid(): void
     {
         $watson = new WatsonTextToSpeech();
-        $expected = 'Not a valid voice provided. Allowed voices: AllisonV2Voice AllisonV3Voice AllisonVoice ';
-        $expected .= 'BirgitV2Voice BirgitV3Voice BirgitVoice DieterV2Voice DieterV3Voice DieterVoice EmiV3Voice ';
-        $expected .= 'EmiVoice EmilyV3Voice EmmaVoice EnriqueV3Voice EnriqueVoice ErikaV3Voice FrancescaV2Voice ';
-        $expected .= 'FrancescaV3Voice FrancescaVoice HenryV3Voice IsabelaV3Voice IsabelaVoice KateV3Voice KateVoice ';
-        $expected .= 'KevinV3Voice LauraV3Voice LauraVoice LiNaVoice LiamVoice LisaV2Voice LisaV3Voice LisaVoice ';
-        $expected .= 'MichaelV2Voice MichaelV3Voice MichaelVoice OliviaV3Voice OmarVoice ReneeV3Voice ReneeVoice ';
-        $expected .= 'SofiaV3Voice SofiaVoice WangWeiVoice ZhangJingVoice';
+
+        $expected = 'Not a valid voice provided. Allowed voices: AllisonV2Voice, AllisonV3Voice, AllisonVoice, ';
+        $expected .= 'BirgitV2Voice, BirgitV3Voice, BirgitVoice, DieterV2Voice, DieterV3Voice, DieterVoice, ';
+        $expected .= 'EmiV3Voice, EmiVoice, EmilyV3Voice, EmmaVoice, EnriqueV3Voice, EnriqueVoice, ErikaV3Voice, ';
+        $expected .= 'FrancescaV2Voice, FrancescaV3Voice, FrancescaVoice, HenryV3Voice, IsabelaV3Voice, IsabelaVoice, ';
+        $expected .= 'KateV3Voice, KateVoice, KevinV3Voice, LauraV3Voice, LauraVoice, LiNaVoice, LiamVoice, ';
+        $expected .= 'LisaV2Voice, LisaV3Voice, LisaVoice, MichaelV2Voice, MichaelV3Voice, MichaelVoice, ';
+        $expected .= 'OliviaV3Voice, OmarVoice, ReneeV3Voice, ReneeVoice, SofiaV3Voice, SofiaVoice, WangWeiVoice, ';
+        $expected .= 'ZhangJingVoice';
 
         $this->expectExceptionMessage($expected);
 
@@ -283,7 +288,7 @@ class WatsonTextToSpeechTest extends TestCase
     {
         $watson = new WatsonTextToSpeech();
         $watson->setOutputPath('/public');
-        $watson->setApiKey(Secret::API_KEY);
+        $watson->setApiKey(AbstractSecret::API_KEY);
 
         $this->expectExceptionMessage('Url is not set. Please set Watson URL by passing Url string to setWatsonUrl()');
         $watson->runTextToSpeech('No Url');
@@ -295,7 +300,7 @@ class WatsonTextToSpeechTest extends TestCase
     public function testWatsonApiKeyMustBeValid(): void
     {
         $watson = new WatsonTextToSpeech();
-        $watson->setApiKey(Secret::API_KEY . 'invalid');
+        $watson->setApiKey(AbstractSecret::API_KEY . 'invalid');
         $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com');
 
         $path = '/public';
@@ -311,7 +316,7 @@ class WatsonTextToSpeechTest extends TestCase
     public function testWatsonVoiceAndLanguageCombinationMustBeValid(): void
     {
         $watson = new WatsonTextToSpeech();
-        $watson->setApiKey(Secret::API_KEY . 'invalid');
+        $watson->setApiKey(AbstractSecret::API_KEY . 'invalid');
         $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com');
         $watson->setOutputPath('/public');
         $watson->setLanguage('en-US');
