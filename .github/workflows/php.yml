@@ -34,10 +34,6 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 
-#      - name: Tests
-#        run: composer run-script test
-#        shell: pwsh
-
       - name: Static analysis
         run: composer run-script phpstan
 
