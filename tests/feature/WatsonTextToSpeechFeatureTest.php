@@ -24,7 +24,7 @@ class WatsonTextToSpeechFeatureTest extends TestCase
         $watson->setOutputPath($path);
         $file = $watson->runTextToSpeech('Working');
 
-        $this->assertStringStartsWith('/public', $file);
+        $this->assertStringStartsWith(sys_get_temp_dir(), $file);
     }
 
     /**
@@ -36,7 +36,7 @@ class WatsonTextToSpeechFeatureTest extends TestCase
         $watson->setApiKey(AbstractSecret::API_KEY);
         $watson->setAudioFormat('wav');
         $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/v1/synthesize/');
-        $watson->setOutputPath('/public');
+        $watson->setOutputPath(sys_get_temp_dir());
 
         $file = $watson->runTextToSpeech('W.A.V.');
 

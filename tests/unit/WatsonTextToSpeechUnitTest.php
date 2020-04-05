@@ -207,7 +207,7 @@ class WatsonTextToSpeechUnitTest extends TestCase
     public function testWatsonTextToSpeechRequiresAnAPIKeyToBeSet(): void
     {
         $watson = new WatsonTextToSpeech();
-        $watson->setOutputPath('/public');
+        $watson->setOutputPath(sys_get_temp_dir());
 
         $this->expectExceptionMessage(
             'API key is not set. Please set API key by passing API Key string to setApiKey()'
@@ -223,7 +223,7 @@ class WatsonTextToSpeechUnitTest extends TestCase
         $watson = new WatsonTextToSpeech();
         $watson->setApiKey('invalid');
         $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com');
-        $watson->setOutputPath('/public');
+        $watson->setOutputPath(sys_get_temp_dir());
         $watson->setLanguage('en-US');
         $watson->setVoice('KateVoice');
 
@@ -251,7 +251,7 @@ class WatsonTextToSpeechUnitTest extends TestCase
     public function testWatsonTextToSpeechRequiresTheURLToBeSet(): void
     {
         $watson = new WatsonTextToSpeech();
-        $watson->setOutputPath('/public');
+        $watson->setOutputPath(sys_get_temp_dir());
         $watson->setApiKey('invalid');
 
         $this->expectExceptionMessage(
