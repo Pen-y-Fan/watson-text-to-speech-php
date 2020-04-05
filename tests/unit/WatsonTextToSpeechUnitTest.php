@@ -259,8 +259,4 @@ class WatsonTextToSpeechUnitTest extends TestCase
         );
         $watson->runTextToSpeech('No Url');
     }
-
-    // setAudioFormat (valid)
-
-
 }
