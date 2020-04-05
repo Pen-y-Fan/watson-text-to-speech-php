@@ -234,7 +234,7 @@ The language and voice combination must match the name is the list.
 * _default:_ `MichaelVoice`
 ---
 
-##### Set Voice
+##### Set Name 
 
 Alternatively the language and voice can be set as follows:
 
