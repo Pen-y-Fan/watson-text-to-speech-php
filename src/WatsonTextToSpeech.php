@@ -30,11 +30,6 @@ class WatsonTextToSpeech
     private $watsonApiKey;
 
     /**
-     * @var WatsonFileExtension
-     */
-    private $watsonFileExtension;
-
-    /**
      * @var WatsonLanguage
      */
     private $watsonLanguage;
@@ -58,7 +53,6 @@ class WatsonTextToSpeech
     {
         $this->watsonLanguage = new WatsonLanguage('en-US');
         $this->watsonAudioFormat = new WatsonAudioFormat('mp3');
-        $this->watsonFileExtension = new WatsonFileExtension($this->watsonAudioFormat);
         $this->watsonVoice = new WatsonVoice('MichaelVoice');
     }
 
@@ -96,8 +90,6 @@ class WatsonTextToSpeech
     public function setAudioFormat(string $format): void
     {
         $this->watsonAudioFormat = new WatsonAudioFormat($format);
-
-        $this->watsonFileExtension = new WatsonFileExtension($this->watsonAudioFormat);
     }
 
     /**
@@ -174,7 +166,6 @@ class WatsonTextToSpeech
         try {
             $this->checkMinimumParametersSet();
             $this->setOptionalParamaters($format, $language, $voice);
-//            $this->prepareOutputFile();
             return $this->processWatsonTextToSpeech();
         } catch (Exception $exception) {
             throw new Exception($exception->getMessage());
@@ -237,22 +228,8 @@ class WatsonTextToSpeech
             $this->watsonAudioFormat,
             $this->watsonLanguageAndVoice,
             $this->watsonUrl,
-            $this->getOutputFile()
+            $this->watsonOutputPath
         );
         return $client->getWatsonSpeech($this->text);
-    }
-
-    /**
-     * prepare output file and name
-     * @throws Exception
-     */
-    private function getOutputFile(): string
-    {
-        $fileName = date('Ymd-GisT', time()) . random_int(
-            100,
-            999
-        ) . '.' . $this->watsonFileExtension->getFileExtension();
-
-        return rtrim($this->watsonOutputPath->getOutputPath(), '/') . '/' . $fileName;
     }
 }
