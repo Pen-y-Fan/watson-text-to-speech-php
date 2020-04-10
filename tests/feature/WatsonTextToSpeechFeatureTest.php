@@ -18,7 +18,7 @@ class WatsonTextToSpeechFeatureTest extends TestCase
     {
         $watson = new WatsonTextToSpeech();
         $watson->setApiKey(AbstractSecret::API_KEY);
-        $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/v1/synthesize/');
+        $watson->setUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/v1/synthesize/');
 
         $path = sys_get_temp_dir();
         $watson->setOutputPath($path);
@@ -35,7 +35,7 @@ class WatsonTextToSpeechFeatureTest extends TestCase
         $watson = new WatsonTextToSpeech();
         $watson->setApiKey(AbstractSecret::API_KEY);
         $watson->setAudioFormat('wav');
-        $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/v1/synthesize/');
+        $watson->setUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/v1/synthesize/');
         $path = sys_get_temp_dir();
         $watson->setOutputPath($path);
 
@@ -54,7 +54,7 @@ class WatsonTextToSpeechFeatureTest extends TestCase
         $watson->setLanguage('en-GB');
         $watson->setVoice('KateVoice');
 
-        $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com');
+        $watson->setUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com');
         $path = sys_get_temp_dir();
         $watson->setOutputPath($path);
 
@@ -72,7 +72,7 @@ class WatsonTextToSpeechFeatureTest extends TestCase
         $watson->setApiKey(AbstractSecret::API_KEY);
         $path = sys_get_temp_dir();
         $watson->setOutputPath($path);
-        $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com');
+        $watson->setUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com');
 
         $file = $watson->runTextToSpeech('français', 'wav', 'fr-FR', 'ReneeV3Voice');
 
@@ -86,7 +86,7 @@ class WatsonTextToSpeechFeatureTest extends TestCase
     {
         $watson = new WatsonTextToSpeech();
         $watson->setApiKey(AbstractSecret::API_KEY . 'invalid');
-        $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com');
+        $watson->setUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com');
 
         $path = sys_get_temp_dir();
         $watson->setOutputPath($path);

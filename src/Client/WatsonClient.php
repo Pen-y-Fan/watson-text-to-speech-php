@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace PenYFan\WatsonTextToSpeech\Client;
 
 use Exception;
+use PenYFan\WatsonTextToSpeech\LanguageAndVoice;
+use PenYFan\WatsonTextToSpeech\WatsonApiKey;
+use PenYFan\WatsonTextToSpeech\WatsonAudioFormat;
+use PenYFan\WatsonTextToSpeech\WatsonUrl;
 
 class WatsonClient
 {
@@ -34,17 +38,17 @@ class WatsonClient
     private $outputFilePath;
 
     public function __construct(
-        string $apiKey,
-        string $audioFormat,
-        string $languageAndVoice,
-        string $watsonUrl,
-        string $outputFilePath
+        WatsonApiKey $watsonApiKey,
+        WatsonAudioFormat $watsonAudioFormat,
+        LanguageAndVoice $languageAndVoice,
+        WatsonUrl $watsonUrl,
+        string $fullFilePath
     ) {
-        $this->apiKey = $apiKey;
-        $this->audioFormat = $audioFormat;
-        $this->languageAndVoice = $languageAndVoice;
-        $this->watsonUrl = $watsonUrl;
-        $this->outputFilePath = $outputFilePath;
+        $this->apiKey = $watsonApiKey->getApiKey();
+        $this->audioFormat = $watsonAudioFormat->getAudioFormat();
+        $this->languageAndVoice = $languageAndVoice->getLanguageAndVoice();
+        $this->watsonUrl = $watsonUrl->getUrl();
+        $this->outputFilePath = $fullFilePath;
     }
 
     /**
