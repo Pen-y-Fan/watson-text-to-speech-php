@@ -14,8 +14,6 @@ class WatsonTextToSpeechCommand extends Command
 
     public function handle(): void
     {
-        $this->info(
-            'info on text to speech'
-        );
+        $this->info('info on text to speech');
     }
 }
