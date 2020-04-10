@@ -22,7 +22,7 @@
     ],
     "require": {
         "php": "^7.1",
-        "illuminate/support": "^6.0",
+        "illuminate/support": "^6.0|^7.0",
         "ext-json": "*",
         "ext-curl": "*"
     },
@@ -62,10 +62,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "PenYFan\\WatsonTextToSpeechPhp\\WatsonTextToSpeechPhpServiceProvider"
+                "PenYFan\\WatsonTextToSpeech\\WatsonTextToSpeechServiceProvider"
             ],
             "aliases": {
-                "WatsonTextToSpeechPhp": "PenYFan\\WatsonTextToSpeechPhp\\WatsonTextToSpeechPhpFacade"
+                "WatsonTextToSpeechPhp": "PenYFan\\WatsonTextToSpeech\\WatsonTextToSpeechFacade"
             }
         }
     }

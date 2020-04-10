@@ -18,6 +18,6 @@ class WatsonTextToSpeechFacade extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'watson-text-to-speech-php';
+        return 'watson-text-to-speech';
     }
 }

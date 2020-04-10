@@ -201,8 +201,11 @@ class WatsonTextToSpeech
      *
      * @throws Exception
      */
-    private function setOptionalParamaters(?string $format = '', ?string $language = '', ?string $voice = ''): void
-    {
+    private function setOptionalParamaters(
+        ?string $format = '',
+        ?string $language = '',
+        ?string $voice = ''
+    ): void {
         if (! empty($format)) {
             $this->setAudioFormat($format);
         }
