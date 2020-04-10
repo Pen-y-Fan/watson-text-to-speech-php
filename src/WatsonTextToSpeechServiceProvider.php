@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PenYFan\WatsonTextToSpeech;
 
 use Illuminate\Support\ServiceProvider;
+use PenYFan\WatsonTextToSpeech\Console\WatsonTextToSpeechCommand;
 
 class WatsonTextToSpeechServiceProvider extends ServiceProvider
 {
@@ -43,6 +44,8 @@ class WatsonTextToSpeechServiceProvider extends ServiceProvider
 
             // Registering package commands.
             // $this->commands([]);
+
+            $this->commands([WatsonTextToSpeechCommand::class]);
         }
     }
 
