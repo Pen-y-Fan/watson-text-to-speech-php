@@ -13,18 +13,18 @@ class WatsonTextToSpeechUnitTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testWatsonUrlIsRequired(): void
+    public function testUrlIsRequired(): void
     {
         $watson = new WatsonTextToSpeech();
-        $this->expectExceptionMessage('Watson URL not provided');
+        $this->expectExceptionMessage('Url is not set. Please set Watson URL by passing Url string to setWatsonUrl()');
 
-        $watson->setWatsonUrl('');
+        $watson->setUrl('');
     }
 
     /**
      * @throws Exception
      */
-    public function testWatsonUrlIsInvalid(): void
+    public function testUrlIsInvalid(): void
     {
         $watson = new WatsonTextToSpeech();
 
@@ -39,13 +39,13 @@ class WatsonTextToSpeechUnitTest extends TestCase
 
         $this->expectExceptionMessage($expected);
 
-        $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm');
+        $watson->setUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm');
     }
 
     /**
      * @throws Exception
      */
-    public function testWatsonApiKeyIsRequired(): void
+    public function testApiKeyIsRequired(): void
     {
         $watson = new WatsonTextToSpeech();
         $this->expectExceptionMessage('Watson API key not provided');
@@ -56,7 +56,7 @@ class WatsonTextToSpeechUnitTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testWatsonAudioFormatIsRequired(): void
+    public function testAudioFormatIsRequired(): void
     {
         $watson = new WatsonTextToSpeech();
         $this->expectExceptionMessage('Audio format string is empty');
@@ -67,7 +67,7 @@ class WatsonTextToSpeechUnitTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testWatsonAudioFormatIsInvalid(): void
+    public function testAudioFormatIsInvalid(): void
     {
         $watson = new WatsonTextToSpeech();
 
@@ -84,7 +84,7 @@ class WatsonTextToSpeechUnitTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testWatsonLanguageIsRequired(): void
+    public function testLanguageIsRequired(): void
     {
         $watson = new WatsonTextToSpeech();
         $this->expectExceptionMessage('Language string is empty');
@@ -95,7 +95,7 @@ class WatsonTextToSpeechUnitTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testWatsonLanguageIsInvalid(): void
+    public function testLanguageIsInvalid(): void
     {
         $watson = new WatsonTextToSpeech();
         $expected = 'Not a valid language provided. Allowed languages: ';
@@ -111,7 +111,7 @@ class WatsonTextToSpeechUnitTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testWatsonVoiceIsRequired(): void
+    public function testVoiceIsRequired(): void
     {
         $watson = new WatsonTextToSpeech();
         $this->expectExceptionMessage('Voice string is empty');
@@ -122,7 +122,7 @@ class WatsonTextToSpeechUnitTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testWatsonVoiceIsInvalid(): void
+    public function testVoiceIsInvalid(): void
     {
         $watson = new WatsonTextToSpeech();
 
@@ -143,7 +143,7 @@ class WatsonTextToSpeechUnitTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testWatsonOutputPathIsRequired(): void
+    public function testOutputPathIsRequired(): void
     {
         $watson = new WatsonTextToSpeech();
         $this->expectExceptionMessage('Output path is empty');
@@ -155,7 +155,7 @@ class WatsonTextToSpeechUnitTest extends TestCase
      * @requires OSFAMILY Windows
      * @throws Exception
      */
-    public function testWatsonOutputPathIsInvalid(): void
+    public function testOutputPathIsInvalid(): void
     {
         $watson = new WatsonTextToSpeech();
         $this->expectExceptionMessage('Unable to create output directory');
@@ -166,7 +166,7 @@ class WatsonTextToSpeechUnitTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testWatsonOutputPathCanBeCreated(): void
+    public function testOutputPathCanBeCreated(): void
     {
         $path = sys_get_temp_dir() . '/' . random_int(1000, 9999);
 
@@ -181,7 +181,7 @@ class WatsonTextToSpeechUnitTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testWatsonTextToSpeechRequiresText(): void
+    public function testTextToSpeechRequiresText(): void
     {
         $watson = new WatsonTextToSpeech();
         $this->expectExceptionMessage('No text string provided');
@@ -192,7 +192,7 @@ class WatsonTextToSpeechUnitTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testWatsonTextToSpeechRequiresAnOutputPathToBeSet(): void
+    public function testTextToSpeechRequiresAnOutputPathToBeSet(): void
     {
         $watson = new WatsonTextToSpeech();
 
@@ -206,7 +206,7 @@ class WatsonTextToSpeechUnitTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testWatsonTextToSpeechRequiresAnAPIKeyToBeSet(): void
+    public function testTextToSpeechRequiresAnAPIKeyToBeSet(): void
     {
         $watson = new WatsonTextToSpeech();
         $watson->setOutputPath(sys_get_temp_dir());
@@ -220,11 +220,11 @@ class WatsonTextToSpeechUnitTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testWatsonVoiceAndLanguageCombinationMustBeValid(): void
+    public function testVoiceAndLanguageCombinationMustBeValid(): void
     {
         $watson = new WatsonTextToSpeech();
         $watson->setApiKey('invalid');
-        $watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com');
+        $watson->setUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com');
         $watson->setOutputPath(sys_get_temp_dir());
         $watson->setLanguage('en-US');
         $watson->setVoice('KateVoice');
@@ -250,7 +250,7 @@ class WatsonTextToSpeechUnitTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testWatsonTextToSpeechRequiresTheURLToBeSet(): void
+    public function testTextToSpeechRequiresTheURLToBeSet(): void
     {
         $watson = new WatsonTextToSpeech();
         $watson->setOutputPath(sys_get_temp_dir());
@@ -265,52 +265,12 @@ class WatsonTextToSpeechUnitTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testWatsonLanguageAndVoiceIsValid(): void
-    {
-        $watson = new WatsonTextToSpeech();
-
-        $expected = 'Not a valid language and voice combination. Allowed combinations: ar-AR_OmarVoice, ';
-        $expected .= 'de-DE_BirgitV2Voice, de-DE_BirgitV3Voice, de-DE_BirgitVoice, de-DE_DieterV2Voice,';
-        $expected .= ' de-DE_DieterV3Voice, de-DE_DieterVoice, de-DE_ErikaV3Voice, en-GB_KateV3Voice, ';
-        $expected .= 'en-GB_KateVoice, en-US_AllisonV2Voice, en-US_AllisonV3Voice, en-US_AllisonVoice, ';
-        $expected .= 'en-US_EmilyV3Voice, en-US_HenryV3Voice, en-US_KevinV3Voice, en-US_LisaV2Voice, ';
-        $expected .= 'en-US_LisaV3Voice, en-US_LisaVoice, en-US_MichaelV2Voice, en-US_MichaelV3Voice, ';
-        $expected .= 'en-US_MichaelVoice, en-US_OliviaV3Voice, es-ES_EnriqueV3Voice, es-ES_EnriqueVoice, ';
-        $expected .= 'es-ES_LauraV3Voice, es-ES_LauraVoice, es-LA_SofiaV3Voice, es-LA_SofiaVoice, es-US_SofiaV3Voice, ';
-        $expected .= 'es-US_SofiaVoice, fr-FR_ReneeV3Voice, fr-FR_ReneeVoice, it-IT_FrancescaV2Voice, ';
-        $expected .= 'it-IT_FrancescaV3Voice, it-IT_FrancescaVoice, ja-JP_EmiV3Voice, ja-JP_EmiVoice, ';
-        $expected .= 'nl-NL_EmmaVoice, nl-NL_LiamVoice, pt-BR_IsabelaV3Voice, pt-BR_IsabelaVoice, zh-CN_LiNaVoice, ';
-        $expected .= 'zh-CN_WangWeiVoice, zh-CN_ZhangJingVoice';
-
-        $this->expectExceptionMessage($expected);
-
-        $watson->setLanguageAndVoice('de-DE_BirgitV2Voice!!');
-
-        $watson->runTextToSpeech('Broken voice');
-    }
-
-    /**
-     * @throws Exception
-     */
     public function testAudioWithCodecCabBeSetBeforeLanguageIsRequired(): void
     {
         $watson = new WatsonTextToSpeech();
 
         $watson->setAudioFormat('ogg;codecs=vorbis');
 
-        $this->expectExceptionMessage('Language string is empty');
-
-        $watson->setLanguage('');
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function testVoiceAndLanguageCanBeSEtBeforeLanguageIsRequired(): void
-    {
-        $watson = new WatsonTextToSpeech();
-
-        $watson->setLanguageAndVoice('en-US_AllisonV3Voice');
         $this->expectExceptionMessage('Language string is empty');
 
         $watson->setLanguage('');

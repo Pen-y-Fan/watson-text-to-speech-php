@@ -39,7 +39,7 @@ use PenYFan\WatsonTextToSpeech\WatsonTextToSpeech;
 
 $watson = new WatsonTextToSpeech();
 $watson->setApiKey('yourAPIkeyFromIBM');
-$watson->setWatsonUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com');
+$watson->setUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com');
 $watson->setOutputPath('/public');
 $file = $watson->runTextToSpeech('This is the text you want to convert to speech');
 ```
@@ -234,7 +234,7 @@ The language and voice combination must match the name is the list.
 * _default:_ `MichaelVoice`
 ---
 
-##### Set Voice
+##### Set Name 
 
 Alternatively the language and voice can be set as follows:
 
