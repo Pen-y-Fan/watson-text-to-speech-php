@@ -5,14 +5,11 @@ declare(strict_types=1);
 namespace PenYFan\WatsonTextToSpeech\Tests\unit;
 
 use Exception;
-use Orchestra\Testbench\TestCase;
 use PenYFan\WatsonTextToSpeech\WatsonLanguageAndVoice;
+use PHPUnit\Framework\TestCase;
 
 class WatsonLanguageAndVoiceTest extends TestCase
 {
-    /**
-     * @throws Exception
-     */
     public function testCanBeSet(): void
     {
         $language = new WatsonLanguageAndVoice('en-US_AllisonV3Voice');

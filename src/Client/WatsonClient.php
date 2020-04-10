@@ -8,6 +8,7 @@ use Exception;
 use PenYFan\WatsonTextToSpeech\WatsonApiKey;
 use PenYFan\WatsonTextToSpeech\WatsonAudioFormat;
 use PenYFan\WatsonTextToSpeech\WatsonLanguageAndVoice;
+use PenYFan\WatsonTextToSpeech\WatsonOutputPath;
 use PenYFan\WatsonTextToSpeech\WatsonUrl;
 
 class WatsonClient
@@ -42,13 +43,13 @@ class WatsonClient
         WatsonAudioFormat $watsonAudioFormat,
         WatsonLanguageAndVoice $watsonLanguageAndVoice,
         WatsonUrl $watsonUrl,
-        string $fullFilePath
+        WatsonOutputPath $watsonOutputPath
     ) {
         $this->apiKey = $watsonApiKey->getApiKey();
         $this->audioFormat = $watsonAudioFormat->getAudioFormat();
         $this->languageAndVoice = $watsonLanguageAndVoice->getLanguageAndVoice();
         $this->watsonUrl = $watsonUrl->getUrl();
-        $this->outputFilePath = $fullFilePath;
+        $this->outputFilePath = $watsonOutputPath->getPathWithFileName() . '.' . $watsonAudioFormat->getFileExtension();
     }
 
     /**

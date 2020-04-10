@@ -30,6 +30,16 @@ class WatsonAudioFormat
         return $this->audioFormat;
     }
 
+    public function getFileExtension(): string
+    {
+        $pos = strpos($this->audioFormat, ';');
+        if ($pos !== false) {
+            return substr($this->audioFormat, 0, $pos);
+        }
+
+        return $this->audioFormat;
+    }
+
     private function mustBeValidAudioFormat(string $audioFormat): void
     {
         if (! $this->isAudioFormatSet($audioFormat)) {

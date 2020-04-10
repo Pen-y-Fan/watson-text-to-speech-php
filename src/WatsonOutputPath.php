@@ -23,6 +23,15 @@ class WatsonOutputPath
         return $this->outputPath;
     }
 
+    /**
+     * prepare output file and name
+     * @throws Exception
+     */
+    public function getPathWithFileName(): string
+    {
+        return $this->outputPath . '/' . date('Ymd-GisT', time()) . random_int(100, 999);
+    }
+
     private function mustBeValidOutputPath(string $outputPath): void
     {
         if (! $this->isOutputPathSet($outputPath)) {
