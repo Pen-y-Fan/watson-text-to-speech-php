@@ -6,16 +6,16 @@ namespace PenYFan\WatsonTextToSpeech\Tests\unit;
 
 use Exception;
 use Orchestra\Testbench\TestCase;
-use PenYFan\WatsonTextToSpeech\LanguageAndVoice;
+use PenYFan\WatsonTextToSpeech\WatsonLanguageAndVoice;
 
-class LanguageAndVoiceTest extends TestCase
+class WatsonLanguageAndVoiceTest extends TestCase
 {
     /**
      * @throws Exception
      */
     public function testCanBeSet(): void
     {
-        $language = new LanguageAndVoice('en-US_AllisonV3Voice');
+        $language = new WatsonLanguageAndVoice('en-US_AllisonV3Voice');
 
         $this->assertSame('en-US_AllisonV3Voice', $language->getLanguageAndVoice());
     }
@@ -26,10 +26,10 @@ class LanguageAndVoiceTest extends TestCase
     public function testThrowsExceptionWhenNotSet(): void
     {
         $this->expectExceptionMessage(
-            'LanguageAndVoice is not set. Please set Watson LanguageAndVoice by passing LanguageAndVoice string to setWatsonLanguageAndVoice()'
+            'WatsonLanguageAndVoice is not set. Please set Watson WatsonLanguageAndVoice by passing WatsonLanguageAndVoice string to setWatsonLanguageAndVoice()'
         );
 
-        new LanguageAndVoice('');
+        new WatsonLanguageAndVoice('');
     }
 
     /**
@@ -38,8 +38,8 @@ class LanguageAndVoiceTest extends TestCase
     public function testMustBeValidCombination(): void
     {
         $expected = 'Not a valid language and voice combination. Allowed combinations: ar-AR_OmarVoice, ';
-        $expected .= 'de-DE_BirgitV2Voice, de-DE_BirgitV3Voice, de-DE_BirgitVoice, de-DE_DieterV2Voice,';
-        $expected .= ' de-DE_DieterV3Voice, de-DE_DieterVoice, de-DE_ErikaV3Voice, en-GB_KateV3Voice, ';
+        $expected .= 'de-DE_BirgitV2Voice, de-DE_BirgitV3Voice, de-DE_BirgitVoice, de-DE_DieterV2Voice, ';
+        $expected .= 'de-DE_DieterV3Voice, de-DE_DieterVoice, de-DE_ErikaV3Voice, en-GB_KateV3Voice, ';
         $expected .= 'en-GB_KateVoice, en-US_AllisonV2Voice, en-US_AllisonV3Voice, en-US_AllisonVoice, ';
         $expected .= 'en-US_EmilyV3Voice, en-US_HenryV3Voice, en-US_KevinV3Voice, en-US_LisaV2Voice, ';
         $expected .= 'en-US_LisaV3Voice, en-US_LisaVoice, en-US_MichaelV2Voice, en-US_MichaelV3Voice, ';
@@ -52,6 +52,6 @@ class LanguageAndVoiceTest extends TestCase
 
         $this->expectExceptionMessage($expected);
 
-        new LanguageAndVoice('de-DE_BirgitV2Voice!!');
+        new WatsonLanguageAndVoice('de-DE_BirgitV2Voice!!');
     }
 }

@@ -6,7 +6,7 @@ namespace PenYFan\WatsonTextToSpeech;
 
 use Exception;
 
-class LanguageAndVoice
+class WatsonLanguageAndVoice
 {
     /**
      * @var array
@@ -31,7 +31,7 @@ class LanguageAndVoice
     private $languageAndVoice;
 
     /**
-     * LanguageAndVoice constructor.
+     * WatsonLanguageAndVoice constructor.
      */
     public function __construct(string $languageAndVoice)
     {
@@ -47,7 +47,7 @@ class LanguageAndVoice
     {
         if (! $this->isLanguageAndVoiceSet($languageAndVoice)) {
             throw new Exception(
-                'LanguageAndVoice is not set. Please set Watson LanguageAndVoice by passing LanguageAndVoice string to setWatsonLanguageAndVoice()'
+                'WatsonLanguageAndVoice is not set. Please set Watson WatsonLanguageAndVoice by passing WatsonLanguageAndVoice string to setWatsonLanguageAndVoice()'
             );
         }
 
