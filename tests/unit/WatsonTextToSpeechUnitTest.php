@@ -13,38 +13,6 @@ class WatsonTextToSpeechUnitTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testUrlIsRequired(): void
-    {
-        $watson = new WatsonTextToSpeech();
-        $this->expectExceptionMessage('Url is not set. Please set Watson URL by passing Url string to setWatsonUrl()');
-
-        $watson->setUrl('');
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function testUrlIsInvalid(): void
-    {
-        $watson = new WatsonTextToSpeech();
-
-        $expected = 'Not a valid Watson URL. Allowed URLs: ';
-        $expected .= 'https://api.au-syd.text-to-speech.watson.cloud.ibm.com, ';
-        $expected .= 'https://api.eu-gb.text-to-speech.watson.cloud.ibm.com, ';
-        $expected .= 'https://api.eu-de.text-to-speech.watson.cloud.ibm.com, ';
-        $expected .= 'https://api.jp-tok.text-to-speech.watson.cloud.ibm.com, ';
-        $expected .= 'https://api.kr-seo.text-to-speech.watson.cloud.ibm.com, ';
-        $expected .= 'https://api.us-east.text-to-speech.watson.cloud.ibm.com, ';
-        $expected .= 'https://api.us-south.text-to-speech.watson.cloud.ibm.com';
-
-        $this->expectExceptionMessage($expected);
-
-        $watson->setUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm');
-    }
-
-    /**
-     * @throws Exception
-     */
     public function testApiKeyIsRequired(): void
     {
         $watson = new WatsonTextToSpeech();
@@ -215,36 +183,6 @@ class WatsonTextToSpeechUnitTest extends TestCase
             'API key is not set. Please set API key by passing API Key string to setApiKey()'
         );
         $watson->runTextToSpeech('No API Key');
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function testVoiceAndLanguageCombinationMustBeValid(): void
-    {
-        $watson = new WatsonTextToSpeech();
-        $watson->setApiKey('invalid');
-        $watson->setUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com');
-        $watson->setOutputPath(sys_get_temp_dir());
-        $watson->setLanguage('en-US');
-        $watson->setVoice('KateVoice');
-
-        $expected = 'Not a valid language and voice combination. Allowed combinations: ar-AR_OmarVoice, ';
-        $expected .= 'de-DE_BirgitV2Voice, de-DE_BirgitV3Voice, de-DE_BirgitVoice, de-DE_DieterV2Voice,';
-        $expected .= ' de-DE_DieterV3Voice, de-DE_DieterVoice, de-DE_ErikaV3Voice, en-GB_KateV3Voice, ';
-        $expected .= 'en-GB_KateVoice, en-US_AllisonV2Voice, en-US_AllisonV3Voice, en-US_AllisonVoice, ';
-        $expected .= 'en-US_EmilyV3Voice, en-US_HenryV3Voice, en-US_KevinV3Voice, en-US_LisaV2Voice, ';
-        $expected .= 'en-US_LisaV3Voice, en-US_LisaVoice, en-US_MichaelV2Voice, en-US_MichaelV3Voice, ';
-        $expected .= 'en-US_MichaelVoice, en-US_OliviaV3Voice, es-ES_EnriqueV3Voice, es-ES_EnriqueVoice, ';
-        $expected .= 'es-ES_LauraV3Voice, es-ES_LauraVoice, es-LA_SofiaV3Voice, es-LA_SofiaVoice, es-US_SofiaV3Voice, ';
-        $expected .= 'es-US_SofiaVoice, fr-FR_ReneeV3Voice, fr-FR_ReneeVoice, it-IT_FrancescaV2Voice, ';
-        $expected .= 'it-IT_FrancescaV3Voice, it-IT_FrancescaVoice, ja-JP_EmiV3Voice, ja-JP_EmiVoice, ';
-        $expected .= 'nl-NL_EmmaVoice, nl-NL_LiamVoice, pt-BR_IsabelaV3Voice, pt-BR_IsabelaVoice, zh-CN_LiNaVoice, ';
-        $expected .= 'zh-CN_WangWeiVoice, zh-CN_ZhangJingVoice';
-
-        $this->expectExceptionMessage($expected);
-
-        $watson->runTextToSpeech('Broken Voice and Language combination');
     }
 
     /**

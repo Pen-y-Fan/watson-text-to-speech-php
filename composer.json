@@ -48,6 +48,7 @@
         "test": "phpunit",
         "tests": "phpunit",
         "test:unit": "phpunit --testsuite=unit",
+        "test:unit:coverage": "phpunit --testsuite=unit --coverage-html build/coverage",
         "test:coverage": "phpunit --coverage-html build/coverage",
         "checkcode": "phpcs src tests --standard=PSR12",
         "fixcode": "phpcbf src tests --standard=PSR12",

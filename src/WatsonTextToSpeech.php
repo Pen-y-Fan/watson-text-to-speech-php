@@ -50,9 +50,9 @@ class WatsonTextToSpeech
     private $watsonOutputPath;
 
     /**
-     * @var LanguageAndVoice
+     * @var WatsonLanguageAndVoice
      */
-    private $languageAndVoice;
+    private $watsonLanguageAndVoice;
 
     public function __construct()
     {
@@ -142,16 +142,16 @@ class WatsonTextToSpeech
     public function setLanguageAndVoice(?string $languageAndVoice = ''): void
     {
         if (empty($languageAndVoice)) {
-            $this->languageAndVoice = new LanguageAndVoice(
+            $this->watsonLanguageAndVoice = new WatsonLanguageAndVoice(
                 $this->watsonLanguage->getLanguage() . '_' . $this->watsonVoice->getVoice()
             );
             return;
         }
 
-        $this->languageAndVoice = new LanguageAndVoice($languageAndVoice);
+        $this->watsonLanguageAndVoice = new WatsonLanguageAndVoice($languageAndVoice);
 
-        $this->setLanguage(substr($this->languageAndVoice->getLanguageAndVoice(), 0, 5));
-        $this->setVoice(substr($this->languageAndVoice->getLanguageAndVoice(), 6));
+        $this->setLanguage(substr($this->watsonLanguageAndVoice->getLanguageAndVoice(), 0, 5));
+        $this->setVoice(substr($this->watsonLanguageAndVoice->getLanguageAndVoice(), 6));
     }
 
     /**
@@ -235,7 +235,7 @@ class WatsonTextToSpeech
         $client = new WatsonClient(
             $this->watsonApiKey,
             $this->watsonAudioFormat,
-            $this->languageAndVoice,
+            $this->watsonLanguageAndVoice,
             $this->watsonUrl,
             $this->getOutputFile()
         );
