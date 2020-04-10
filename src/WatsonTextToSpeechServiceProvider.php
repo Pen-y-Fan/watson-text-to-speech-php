@@ -16,29 +16,29 @@ class WatsonTextToSpeechServiceProvider extends ServiceProvider
         /*
          * Optional methods to load your package assets
          */
-        // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'watson-text-to-speech-php');
-        // $this->loadViewsFrom(__DIR__.'/../resources/views', 'watson-text-to-speech-php');
+        // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'watson-text-to-speech');
+        // $this->loadViewsFrom(__DIR__.'/../resources/views', 'watson-text-to-speech');
         // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         // $this->loadRoutesFrom(__DIR__.'/routes.php');
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../config/config.php' => config_path('watson-text-to-speech-php.php'),
+                __DIR__ . '/../config/config.php' => config_path('watson-text-to-speech.php'),
             ], 'config');
 
             // Publishing the views.
             /*$this->publishes([
-                __DIR__.'/../resources/views' => resource_path('views/vendor/watson-text-to-speech-php'),
+                __DIR__.'/../resources/views' => resource_path('views/vendor/watson-text-to-speech'),
             ], 'views');*/
 
             // Publishing assets.
             /*$this->publishes([
-                __DIR__.'/../resources/assets' => public_path('vendor/watson-text-to-speech-php'),
+                __DIR__.'/../resources/assets' => public_path('vendor/watson-text-to-speech'),
             ], 'assets');*/
 
             // Publishing the translation files.
             /*$this->publishes([
-                __DIR__.'/../resources/lang' => resource_path('lang/vendor/watson-text-to-speech-php'),
+                __DIR__.'/../resources/lang' => resource_path('lang/vendor/watson-text-to-speech'),
             ], 'lang');*/
 
             // Registering package commands.
@@ -52,10 +52,10 @@ class WatsonTextToSpeechServiceProvider extends ServiceProvider
     public function register(): void
     {
         // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'watson-text-to-speech-php');
+        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'watson-text-to-speech');
 
         // Register the main class to use with the facade
-        $this->app->singleton('watson-text-to-speech-php', function () {
+        $this->app->singleton('watson-text-to-speech', function () {
             return new WatsonTextToSpeech();
         });
     }
