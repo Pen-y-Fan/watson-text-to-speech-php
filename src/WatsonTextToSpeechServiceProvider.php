@@ -24,7 +24,7 @@ class WatsonTextToSpeechServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../config/config.php' => config_path('watson-text-to-speech.php'),
+                __DIR__ . '/../config/config.php' => 'watson-text-to-speech.php',
             ], 'config');
 
             // Publishing the views.
@@ -55,7 +55,7 @@ class WatsonTextToSpeechServiceProvider extends ServiceProvider
     public function register(): void
     {
         // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'watson-text-to-speech');
+        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'config');
 
         // Register the main class to use with the facade
         $this->app->singleton('watson-text-to-speech', function () {
