@@ -50,11 +50,11 @@
         "test:unit": "phpunit --testsuite=unit",
         "test:unit:coverage": "phpunit --testsuite=unit --coverage-html build/coverage",
         "test:coverage": "phpunit --coverage-html build/coverage",
-        "checkcode": "phpcs src tests --standard=PSR12",
-        "fixcode": "phpcbf src tests --standard=PSR12",
-        "check-cs": "ecs check src tests --ansi",
-        "fix-cs": "ecs check src tests --fix --ansi",
-        "phpstan": "phpstan analyse src tests --ansi --error-format symplify"
+        "checkcode": "phpcs config src tests --standard=PSR12",
+        "fixcode": "phpcbf config src tests --standard=PSR12",
+        "check-cs": "ecs check config src tests --ansi",
+        "fix-cs": "ecs check config src tests --fix --ansi",
+        "phpstan": "phpstan analyse --ansi --error-format symplify"
     },
     "config": {
         "sort-packages": true
