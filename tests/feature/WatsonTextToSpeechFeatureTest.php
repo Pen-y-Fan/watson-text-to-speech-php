@@ -68,13 +68,13 @@ class WatsonTextToSpeechFeatureTest extends TestCase
      */
     public function testWatsonTextToSpeechCanSetAudioLanguageAndVoice(): void
     {
-        $watson = new WatsonTextToSpeech();
-        $watson->setApiKey(AbstractSecret::API_KEY);
         $path = sys_get_temp_dir();
-        $watson->setOutputPath($path);
-        $watson->setUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com');
+        $watson = new WatsonTextToSpeech();
 
-        $file = $watson->runTextToSpeech('français', 'wav', 'fr-FR', 'ReneeV3Voice');
+        $file = $watson->setApiKey(AbstractSecret::API_KEY)
+            ->setOutputPath(sys_get_temp_dir())
+            ->setUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com')
+            ->runTextToSpeech('français', 'wav', 'fr-FR', 'ReneeV3Voice');
 
         $this->assertStringStartsWith($path, $file);
     }

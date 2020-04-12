@@ -66,9 +66,10 @@ class WatsonTextToSpeech
      *
      * @throws Exception
      */
-    public function setUrl(string $url): void
+    public function setUrl(string $url): self
     {
         $this->watsonUrl = new WatsonUrl($url);
+        return $this;
     }
 
     /**
@@ -76,9 +77,10 @@ class WatsonTextToSpeech
      *
      * @throws Exception
      */
-    public function setApiKey(string $apiKey): void
+    public function setApiKey(string $apiKey): self
     {
         $this->watsonApiKey = new WatsonApiKey($apiKey);
+        return $this;
     }
 
     /**
@@ -87,9 +89,10 @@ class WatsonTextToSpeech
      *
      * @throws Exception
      */
-    public function setAudioFormat(string $format): void
+    public function setAudioFormat(string $format): self
     {
         $this->watsonAudioFormat = new WatsonAudioFormat($format);
+        return $this;
     }
 
     /**
@@ -98,9 +101,10 @@ class WatsonTextToSpeech
      *
      * @throws Exception
      */
-    public function setLanguage(string $language): void
+    public function setLanguage(string $language): self
     {
         $this->watsonLanguage = new WatsonLanguage($language);
+        return $this;
     }
 
     /**
@@ -109,9 +113,10 @@ class WatsonTextToSpeech
      *
      * @throws Exception
      */
-    public function setVoice(string $voice): void
+    public function setVoice(string $voice): self
     {
         $this->watsonVoice = new WatsonVoice($voice);
+        return $this;
     }
 
     /**
@@ -119,9 +124,10 @@ class WatsonTextToSpeech
      *
      * @throws Exception
      */
-    public function setOutputPath(string $outputPath): void
+    public function setOutputPath(string $outputPath): self
     {
         $this->watsonOutputPath = new WatsonOutputPath($outputPath);
+        return $this;
     }
 
     /**
@@ -131,19 +137,20 @@ class WatsonTextToSpeech
      *
      * @throws Exception
      */
-    public function setLanguageAndVoice(?string $languageAndVoice = ''): void
+    public function setLanguageAndVoice(?string $languageAndVoice = ''): self
     {
         if (empty($languageAndVoice)) {
             $this->watsonLanguageAndVoice = new WatsonLanguageAndVoice(
                 $this->watsonLanguage->getLanguage() . '_' . $this->watsonVoice->getVoice()
             );
-            return;
+            return $this;
         }
 
         $this->watsonLanguageAndVoice = new WatsonLanguageAndVoice($languageAndVoice);
 
         $this->setLanguage(substr($this->watsonLanguageAndVoice->getLanguageAndVoice(), 0, 5));
         $this->setVoice(substr($this->watsonLanguageAndVoice->getLanguageAndVoice(), 6));
+        return $this;
     }
 
     /**

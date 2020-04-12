@@ -81,4 +81,23 @@ class WatsonTextToSpeechUnitTest extends TestCase
         $this->expectExceptionMessage('No text string provided');
         $watson->runTextToSpeech('');
     }
+
+    /**
+     * @throws Exception
+     */
+    public function testChainingOfMethods(): void
+    {
+        $watson = new WatsonTextToSpeech();
+
+        $this->expectExceptionMessage('No text string provided');
+
+        $watson->setOutputPath(sys_get_temp_dir())
+            ->setApiKey('yourAPIkeyFromIBM')
+            ->setUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com')
+            ->setAudioFormat('wav')
+            ->setLanguage('en-US')
+            ->setVoice('MichaelVoice')
+            ->setLanguageAndVoice('de-DE_BirgitV2Voice')
+            ->runTextToSpeech('');
+    }
 }

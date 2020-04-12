@@ -22,6 +22,8 @@ You can install the package via composer:
 composer require pen-y-fan/watson-text-to-speech-php
 ```
 
+The package uses **PSR-4** namespaces, meaning it is compatible with all PHP projects which implement PSR-4.
+
 ## Usage
 
 ### API Key
@@ -38,9 +40,9 @@ Minimum required information to run the package.
 use PenYFan\WatsonTextToSpeech\WatsonTextToSpeech;
 
 $watson = new WatsonTextToSpeech();
-$watson->setApiKey('yourAPIkeyFromIBM');
-$watson->setUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com');
-$watson->setOutputPath('/public');
+$watson->setApiKey('yourAPIkeyFromIBM')
+    ->setUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com')
+    ->setOutputPath('/public');
 $file = $watson->runTextToSpeech('This is the text you want to convert to speech');
 ```
 
@@ -132,8 +134,7 @@ try {
 }
 ```
 
-Will throw and exception `Not a valid audio format.` as `mp4` audio format is not
- supported as of now
+Will throw and exception `Not a valid audio format.` as `mp4` audio format is not supported as of now
 
 ### Other callable methods
 
@@ -155,12 +156,12 @@ For full details see the
 The language can be set as follows:
 
 ```php
-$watson->setLanguage('en-US');
+$watson->setLanguage('en-GB');
 ```
 
 The language and voice combination must match the name is the list.
 
-* _allowed languages:_ [See List](#supported-language-and-voice-list)
+* _allowed languages:_ [See Table](#supported-language-and-voice-list)
   * ar-AR
   * de-DE
   * en-GB
@@ -182,55 +183,12 @@ The language and voice combination must match the name is the list.
 The voice can be set as follows:
 
 ```php
-$watson->setVoice('MichaelVoice');
+$watson->setVoice('KateVoice');
 ``` 
 
 The language and voice combination must match the name is the list.
 
-* _allowed voices:_  [See List](#supported-language-and-voice-list)
-  * AllisonV2Voice
-  * AllisonV3Voice
-  * AllisonVoice
-  * BirgitV2Voice
-  * BirgitV3Voice
-  * BirgitVoice
-  * DieterV2Voice
-  * DieterV3Voice
-  * DieterVoice
-  * EmiV3Voice
-  * EmiVoice
-  * EmilyV3Voice
-  * EmmaVoice
-  * EnriqueV3Voice
-  * EnriqueVoice
-  * ErikaV3Voice
-  * FrancescaV2Voice
-  * FrancescaV3Voice
-  * FrancescaVoice
-  * HenryV3Voice
-  * IsabelaV3Voice
-  * IsabelaVoice
-  * KateV3Voice
-  * KateVoice
-  * KevinV3Voice
-  * LauraV3Voice
-  * LauraVoice
-  * LiNaVoice
-  * LiamVoice
-  * LisaV2Voice
-  * LisaV3Voice
-  * LisaVoice
-  * MichaelV2Voice
-  * MichaelV3Voice
-  * MichaelVoice
-  * OliviaV3Voice
-  * OmarVoice
-  * ReneeV3Voice
-  * ReneeVoice
-  * SofiaV3Voice
-  * SofiaVoice
-  * WangWeiVoice
-  * ZhangJingVoice
+* _allowed voices:_  [See Table](#supported-language-and-voice-list)
 * _default:_ `MichaelVoice`
 ---
 
@@ -243,6 +201,13 @@ $watson->setLanguageAndVoice('de-DE_BirgitV2Voice');
 ``` 
 
 * _default:_ `en-US_MichaelVoice`
+
+This is the equivalent of:
+
+```php
+$watson->setLanguage('de-DE');
+$watson->setVoice('BirgitV2Voice');
+```
 
 ### Supported language and voice list
 
@@ -295,102 +260,6 @@ pt-BR_IsabelaVoice | **pt-BR** | **IsabelaVoice** | female | Isabela: Brazilian 
 zh-CN_LiNaVoice | **zh-CN** | **LiNaVoice** | female | Li Na: Chinese (Mandarin) female voice.
 zh-CN_WangWeiVoice | **zh-CN** | **WangWeiVoice** | male | Wang Wei: Chinese (Mandarin) male voice.
 zh-CN_ZhangJingVoice | **zh-CN** | **ZhangJingVoice** | female | Zhang Jing: Chinese (Mandarin) female voice.
-
-### Testing
-
-#### Unit Tests
-
-PHPUnit is used to run tests, via a composer script. To run the unit tests, From the root of the project run:
-
-```shell script
-composer test:unit
-```
-
-Unit tests do not perform API calls, the **API_KEY** does not need to be set to run the unit tests.
-
-#### Run all the tests
-
-To run the full test suite, including unit and feature tests, which include calling the IBM Watson API. The **API_KEY**
- needs to be set in tests/**AbstractSecret.php**. For security reasons this file is excluded from Git and Github:
-
-- Rename File: tests/**AbstractSecretExample.php** to tests/**AbstractSecret.php**
-- Open the **AbstractSecret.php** file 
-- Rename Class: **AbstractSecretExample** to **AbstractSecret**
-- Add the API key: 
-  - Open <https://cloud.ibm.com/> and sign in.
-  - Click Services 
-  - Click Text to Speech (under services)
-  - under Credentials click Show credentials. The API key will be shown.
-  - Copy and paste the key into the constant **API_KEY**
-  
-```shell script
-composer test
-```
-
-On Windows a batch file has been created, similar to an alias on Linux/Mac, the same PHPUnit `composer test` can be run
-
-```shell script
-pu
-```
-
-#### Tests with Coverage Report
-
-To run all test and generate a coverage report run:
-
-```shell script
-composer test-coverage
-```
-
-The coverage report is created in /builds, it is best viewed by opening **index.html** in your browser.
-
-### Code Standard
-
-Easy Coding Standard (ECS) is used to check for style and code standards, PSR-12 is used.
-
-#### Check Code
-
-To check code, but not fix an errors:
-
-```shell script
-composer check-cs
-``` 
-
-On Windows a batch file has been created, similar to an alias on Linux/Mac, the same PHPUnit `composer check-cs` can
- be run:
-
-```shell script
-cc
-```
-
-#### Fix Code
-
-May code fixes are automatically provided by ECS, if advised to run --fix, the following script can be run.
-
-```shell script
-composer fix-cs
-```
-
-On Windows a batch file has been created, similar to an alias on Linux/Mac, the same PHPUnit `composer fix-cs` can
- be run:
-
-```shell script
-fc
-```
-
-### Static Analysis
-
-PHPStan is used to run static analysis checks:
-
-```shell script
-composer phpstan
-```
-
-On Windows a batch file has been created, similar to an alias on Linux/Mac, the same PHPUnit `composer phpstan` can
- be run:
-
-```shell script
-ps
-```
 
 ### Changelog
 
