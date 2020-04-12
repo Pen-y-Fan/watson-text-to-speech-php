@@ -40,9 +40,9 @@ Minimum required information to run the package.
 use PenYFan\WatsonTextToSpeech\WatsonTextToSpeech;
 
 $watson = new WatsonTextToSpeech();
-$watson->setApiKey('yourAPIkeyFromIBM');
-$watson->setUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com');
-$watson->setOutputPath('/public');
+$watson->setApiKey('yourAPIkeyFromIBM')
+    ->setUrl('https://api.eu-gb.text-to-speech.watson.cloud.ibm.com')
+    ->setOutputPath('/public');
 $file = $watson->runTextToSpeech('This is the text you want to convert to speech');
 ```
 
