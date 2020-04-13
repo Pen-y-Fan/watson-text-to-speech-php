@@ -5,14 +5,14 @@
 [![PHP Stan](https://img.shields.io/badge/PHPStan-level%207-brightgreen.svg?style=flat)](https://github.com/Pen-y-Fan/watson-text-to-speech-php/)
 [![ECS](https://github.com/Pen-y-Fan/watson-text-to-speech-php/workflows/ecs/badge.svg)](https://github.com/Pen-y-Fan/watson-text-to-speech-php/)
 [![Easy Coding Standard](https://img.shields.io/badge/ECS-level%208-brightgreen.svg?style=flat)](https://github.com/Pen-y-Fan/watson-text-to-speech-php/)
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/pen-y-fan/watson-text-to-speech-php.svg?style=flat-square)](https://packagist.org/packages/pen-y-fan/watson-text-to-speech-php)
-[![Total Downloads](https://img.shields.io/packagist/dt/pen-y-fan/watson-text-to-speech-php.svg?style=flat-square)](https://packagist.org/packages/pen-y-fan/watson-text-to-speech-php)
 [![License](https://poser.pugx.org/silber/bouncer/license.svg)](https://github.com/Pen-y-Fan/watson-text-to-speech-php/LICENSE.md)
 
+<!-- [![Latest Version on Packagist](https://img.shields.io/packagist/v/pen-y-fan/watson-text-to-speech-php.svg?style=flat-square)](https://packagist.org/packages/pen-y-fan/watson-text-to-speech-php) -->
+<!-- [![Total Downloads](https://img.shields.io/packagist/dt/pen-y-fan/watson-text-to-speech-php.svg?style=flat-square)](https://packagist.org/packages/pen-y-fan/watson-text-to-speech-php) -->
 <!-- [![Build Status](https://img.shields.io/travis/pen-y-fan/watson-text-to-speech-php/master.svg?style=flat-square)](https://travis-ci.org/pen-y-fan/watson-text-to-speech-php) -->
 <!-- [![Quality Score](https://img.shields.io/scrutinizer/g/pen-y-fan/watson-text-to-speech-php.svg?style=flat-square)](https://scrutinizer-ci.com/g/pen-y-fan/watson-text-to-speech-php) -->
 
-This package allows text to be converted to speech using the IBM Watson API.
+This package allows text to be converted to speech using the IBM Watson API. 
 
 ## Installation
 
@@ -22,14 +22,16 @@ You can install the package via composer:
 composer require pen-y-fan/watson-text-to-speech-php
 ```
 
-The package uses **PSR-4** namespaces, meaning it is compatible with all PHP projects which implement PSR-4.
+The package uses **PSR-4** namespaces, meaning it is compatible with all PHP projects which implement PSR-4. The package
+ is framework agnostics some additional Laravel specific features have been added, such as loading the required keys
+  via the **.env** file.
 
 ## Usage
 
 ### API Key
 
-First obtain an API Key, free from [IBM Watson](https://www.ibm.com/uk-en/cloud/watson-text-to-speech), the lite
- tier allows 10,000 Characters per Month. No credit card is required. For full instructions see 
+First obtain an API key and Url, free from [IBM Watson](https://www.ibm.com/uk-en/cloud/watson-text-to-speech), the lite
+ tier allows 10,000 characters per month. No credit card is required. For full instructions see 
  [Getting started with Text to Speech](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-gettingStarted#getting-started-tutorial)
 
 ### TL&DR;
@@ -97,8 +99,9 @@ Available regions:
 
 #### Setting output path
 
-Set absolute path of the directory where to save the output. You don't need to provide a file name as it will be auto
- generated.
+Set absolute or relative path of the directory where the output file is saved. You don't need to provide a file name as
+ it will be auto generated. Care should be taken with relative paths, as it is relative to the originating file, e.g. 
+ this is could be **index.php** in the **public** directory.
 
 ```php
 $path = '/aboslute/path/to/directory';
@@ -106,12 +109,13 @@ $path = '/aboslute/path/to/directory';
 $watson->setOutputPath($path);
 ```
 
-This will return the absolute path of the file created if text to speech conversion is successful, otherwise will throw
- an Exception.
+This will set the path of the directory the file will be created in, if text to speech conversion is successful.
+
+An empty string or invalid file directory will throw an exception.
 
 #### Convert Text to Speech
 
-Pass text to convert to speech.
+Finally call `runTextToSpeech` passing in the text to be convert to speech.
 
 ```php
 $text = 'This is some text I want converted to speech';
@@ -119,10 +123,13 @@ $text = 'This is some text I want converted to speech';
 $file = $watson->runTextToSpeech($text);
 ```
 
+`$file` will contain the file path, with the file name, in a date time UTC format + three digit random number, in the
+ choose audio format. E.G. An **mp3** audio format would be saved as: **yyyymmdd-hhmmssUTCnnn.mp3**
+  
 ### Exception handling
 
-Every function throws an Exception in case of any error/issue. Bind the code block within `try-catch` block to catch
- any exception occurred.
+Every function throws an Exception in case of any error/issue. Bind the code block within a `try-catch` block to catch
+ any exception that occurred.
 
 _Ex:_
 
@@ -161,21 +168,8 @@ $watson->setLanguage('en-GB');
 
 The language and voice combination must match the name is the list.
 
-* _allowed languages:_ [See Table](#supported-language-and-voice-list)
-  * ar-AR
-  * de-DE
-  * en-GB
-  * en-US
-  * es-ES
-  * es-LA
-  * es-US
-  * fr-FR
-  * it-IT
-  * ja-JP
-  * nl-NL
-  * pt-BR
-  * zh-CN
-
+* _allowed languages:_  `ar-AR`, `de-DE`, `en-GB`, `en-US`, `es-ES`, `es-LA`, `es-US`, `fr-FR`, `it-IT`, `ja-JP`, 
+`nl-NL`, `pt-BR`, `zh-CN`. [See Table](#supported-language-and-voice-list) for suppoted combinations.
 * _default:_ `en-US`
 
 ##### Set Voice
@@ -200,8 +194,6 @@ Alternatively the language and voice can be set as follows:
 $watson->setLanguageAndVoice('de-DE_BirgitV2Voice');
 ``` 
 
-* _default:_ `en-US_MichaelVoice`
-
 This is the equivalent of:
 
 ```php
@@ -209,9 +201,11 @@ $watson->setLanguage('de-DE');
 $watson->setVoice('BirgitV2Voice');
 ```
 
+* _default:_ `en-US_MichaelVoice`
+
 ### Supported language and voice list
 
-list of supported language and voice strings
+List of supported language and voice
 
 Name | language | voice | gender | description
 --- | --- | --- | --- | ---
@@ -261,7 +255,70 @@ zh-CN_LiNaVoice | **zh-CN** | **LiNaVoice** | female | Li Na: Chinese (Mandarin)
 zh-CN_WangWeiVoice | **zh-CN** | **WangWeiVoice** | male | Wang Wei: Chinese (Mandarin) male voice.
 zh-CN_ZhangJingVoice | **zh-CN** | **ZhangJingVoice** | female | Zhang Jing: Chinese (Mandarin) female voice.
 
-### Changelog
+### Laravel
+
+This package will auto register with a laravel project, some additional helpers have been provided:
+
+#### **.env** keys
+
+The following keys can be added to the **.env** file and will be automatically used:
+
+```ini
+WATSON_API_KEYS=f5sAznhrKQyvBFFaZbtF60m5tzLbqWhyALQawBg5TjRI
+WATSON_API_PATH=storage/watson-api
+WATSON_API_URL=https://api.eu-gb.text-to-speech.watson.cloud.ibm.com
+WATSON_API_NAME=en-US_MichaelVoice
+``` 
+
+If using git version control is recommended to add the Api key to the **.env** file and check it is included in
+ **.gitignore**, by default it is. 
+
+##### WATSON_API_KEYS
+
+**Note:** this is the example from the tutorial - it will not work!
+
+Same as [Setting API Key](#setting-api-key)
+
+##### WATSON_API_PATH
+
+Same as [Setting output path](#setting-output-path)
+
+`storage/watson-api` is the relative link from the public folder. I.E. Relative to **index.php**.
+
+##### WATSON_API_URL
+
+Same as [Setting Watson Url](#setting-watson-url)
+
+##### WATSON_API_NAME
+
+Same as [Set Name](#set-name)
+
+#### Usage
+
+This is a basic example inside **web.php**:
+
+```php
+use PenYFan\WatsonTextToSpeech\WatsonTextToSpeech;
+
+// other routes
+
+Route::get('/watson/{text}', function ($text) {
+    try {
+        $watson = resolve(WatsonTextToSpeech::class);
+        return $watson->runTextToSpeech($text);
+    } catch (Exception $exception) {
+        return $exception->getMessage();
+    }
+});
+```
+
+The above will run when the  `/watson/some text to convert` route is hit and return the relative file path with file
+ name, in a date time format in UTC + three digit random number in the default **mp3** format. The file is saved as:
+ **storage/watson-api/yyyymmdd-hhmmssUTCnnn.mp3**
+
+If there are any problems with the key/values provided or with the IBM Watson API, an error will be returned.
+
+## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
@@ -269,15 +326,15 @@ Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recen
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
-### Security
+## Security
 
 If you discover any security related issues, please email michael.pen.y.fan@gmail.com instead of using the issue
  tracker.
 
 ## Credits
 
-* [Michael Pritchard](https://github.com/pen-y-fan)
-* Based on code by [Anuj Sharma](https://github.com/TBETool/ibm-watson-tts-php)
+* [Michael Pritchard](https://github.com/pen-y-fan).
+* Based on code by [Anuj Sharma](https://github.com/TBETool/ibm-watson-tts-php).
 
 ## License
 
