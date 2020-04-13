@@ -15,11 +15,6 @@ class WatsonTextToSpeech
     private $text;
 
     /**
-     * @var WatsonAudioFormat
-     */
-    private $watsonAudioFormat;
-
-    /**
      * @var WatsonUrl
      */
     private $watsonUrl;
@@ -49,11 +44,19 @@ class WatsonTextToSpeech
      */
     private $watsonLanguageAndVoice;
 
+    /**
+     * @var WatsonAudioFormat
+     */
+    private $watsonAudioFormat;
+
     public function __construct()
     {
         $this->watsonLanguage = new WatsonLanguage('en-US');
         $this->watsonAudioFormat = new WatsonAudioFormat('mp3');
         $this->watsonVoice = new WatsonVoice('MichaelVoice');
+        if (file_exists(__DIR__ . '/../.env')) {
+            $this->setupWatsonFromEnv();
+        }
     }
 
     /**
@@ -180,6 +183,25 @@ class WatsonTextToSpeech
     }
 
     /**
+     * Setup Watsson based on .env file
+     */
+    private function setupWatsonFromEnv(): void
+    {
+        $watsonKeysToMethods = [
+            'key' => 'setApiKey',
+            'url' => 'setUrl',
+            'name' => 'setLanguageAndVoice',
+            'path' => 'setOutputPath',
+        ];
+
+        foreach ($watsonKeysToMethods as $key => $method) {
+            if (config('config.watsonApi.' . $key)) {
+                $this->{$method}((string) config('config.watsonApi.' . $key));
+            }
+        }
+    }
+
+    /**
      * Check the minimum set of required parameters have been set before Watson is run.
      *
      * @throws Exception
@@ -208,11 +230,8 @@ class WatsonTextToSpeech
      *
      * @throws Exception
      */
-    private function setOptionalParamaters(
-        ?string $format = '',
-        ?string $language = '',
-        ?string $voice = ''
-    ): void {
+    private function setOptionalParamaters(?string $format = '', ?string $language = '', ?string $voice = ''): void
+    {
         if (! empty($format)) {
             $this->setAudioFormat($format);
         }
