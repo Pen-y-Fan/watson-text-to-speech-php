@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace PenYFan\WatsonTextToSpeech\Tests\unit;
 
 use Exception;
+use Orchestra\Testbench\TestCase;
 use PenYFan\WatsonTextToSpeech\WatsonTextToSpeech;
-use PHPUnit\Framework\TestCase;
 
 class WatsonTextToSpeechUnitTest extends TestCase
 {
