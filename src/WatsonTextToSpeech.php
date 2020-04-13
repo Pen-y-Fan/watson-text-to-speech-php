@@ -54,7 +54,9 @@ class WatsonTextToSpeech
         $this->watsonLanguage = new WatsonLanguage('en-US');
         $this->watsonAudioFormat = new WatsonAudioFormat('mp3');
         $this->watsonVoice = new WatsonVoice('MichaelVoice');
-        if (file_exists(__DIR__ . '/../.env')) {
+
+        // config is a Laravel function containing the config from the .env file. Call setup from Laravel app.
+        if (is_callable('config')) {
             $this->setupWatsonFromEnv();
         }
     }

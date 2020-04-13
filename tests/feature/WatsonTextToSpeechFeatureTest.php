@@ -25,6 +25,7 @@ class WatsonTextToSpeechFeatureTest extends TestCase
         $file = $watson->runTextToSpeech('Working');
 
         $this->assertStringStartsWith($path, $file);
+        unlink($path);
     }
 
     /**
@@ -42,6 +43,7 @@ class WatsonTextToSpeechFeatureTest extends TestCase
         $file = $watson->runTextToSpeech('W.A.V.');
 
         $this->assertStringStartsWith($path, $file);
+        unlink($path);
     }
 
     /**
@@ -61,6 +63,7 @@ class WatsonTextToSpeechFeatureTest extends TestCase
         $file = $watson->runTextToSpeech('British');
 
         $this->assertStringStartsWith($path, $file);
+        unlink($path);
     }
 
     /**
@@ -77,6 +80,7 @@ class WatsonTextToSpeechFeatureTest extends TestCase
             ->runTextToSpeech('français', 'wav', 'fr-FR', 'ReneeV3Voice');
 
         $this->assertStringStartsWith($path, $file);
+        unlink($path);
     }
 
     /**
