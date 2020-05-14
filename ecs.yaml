@@ -1,6 +1,7 @@
 parameters:
     sets:
         - 'psr12'
+        - 'php70'
         - 'php71'
         - 'symplify'
         - 'common'
@@ -24,13 +25,8 @@ parameters:
         Symplify\CodingStandard\Sniffs\CleanCode\ForbiddenStaticFunctionSniff:
             - src/WatsonTextToSpeechFacade.php
 
-        # Ignore for now TODO: refactor all the generic 'Exceptions'
+        # Ignore generic 'Exceptions'
         Symplify\CodingStandard\Sniffs\Architecture\ExplicitExceptionSniff: null
-
-        # File WatsonTextToSpeechServiceProvider.php is currently an outline with commented out code
-        # TODO: Once the Laravel SsrvicePrivider has been created remove this skip
-        Symplify\CodingStandard\Sniffs\Debug\CommentedOutCodeSniff:
-            - src/WatsonTextToSpeechServiceProvider.php
 
 services:
     Symplify\CodingStandard\Sniffs\CleanCode\CognitiveComplexitySniff:
