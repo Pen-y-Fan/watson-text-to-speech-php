@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PenYFan\WatsonTextToSpeech;
 
 use Exception;
+use Throwable;
 
 class WatsonOutputPath
 {
@@ -63,7 +64,7 @@ class WatsonOutputPath
             if (mkdir($outputPath, 0777, true)) {
                 return true;
             }
-        } catch (Exception $exception) {
+        } catch (Throwable $throwable) {
         }
         return false;
     }

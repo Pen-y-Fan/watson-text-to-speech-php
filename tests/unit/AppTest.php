@@ -8,6 +8,7 @@ use Exception;
 use Orchestra\Testbench\TestCase;
 use PenYFan\WatsonTextToSpeech\WatsonTextToSpeech;
 use PenYFan\WatsonTextToSpeech\WatsonTextToSpeechServiceProvider;
+use Throwable;
 
 class AppTest extends TestCase
 {
@@ -25,7 +26,7 @@ class AppTest extends TestCase
 
         try {
             $env = parse_ini_file(__DIR__ . '/../../' . $file);
-        } catch (Exception $exception) {
+        } catch (Throwable $throwable) {
             $this->markTestSkipped(
                 'Skipped: The ' . $file . ' file is not available: ' . realpath(
                     __DIR__ . '/../../'
@@ -52,7 +53,7 @@ class AppTest extends TestCase
             config('config.watsonApi.url'),
             'WATSON_API_PATH is not set'
         );
-        $this->assertSame('./storage/watson-api', config('config.watsonApi.path'), 'WATSON_API_URL is not set');
+        $this->assertSame('storage/watson-api', config('config.watsonApi.path'), 'WATSON_API_URL is not set');
         $this->assertSame('en-US_MichaelVoice', config('config.watsonApi.name'), 'WATSON_API_NAME is not set');
     }
 

@@ -6,6 +6,7 @@ namespace PenYFan\WatsonTextToSpeech;
 
 use Exception;
 use PenYFan\WatsonTextToSpeech\Client\WatsonClient;
+use Throwable;
 
 class WatsonTextToSpeech
 {
@@ -179,8 +180,8 @@ class WatsonTextToSpeech
             $this->checkMinimumParametersSet();
             $this->setOptionalParamaters($format, $language, $voice);
             return $this->processWatsonTextToSpeech();
-        } catch (Exception $exception) {
-            throw new Exception($exception->getMessage());
+        } catch (Throwable $throwable) {
+            throw new Exception($throwable->getMessage());
         }
     }
 
