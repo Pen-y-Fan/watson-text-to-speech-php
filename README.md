@@ -16,10 +16,29 @@ This package allows text to be converted to speech using the IBM Watson API.
 
 ## Installation
 
-You can install the package via composer:
+This project has not been published as a package. To use it in your package add the following to your project. 
 
-```bash
-composer require pen-y-fan/watson-text-to-speech-php
+***composer.json***
+
+```json
+{
+"require": {
+        // other dependances
+        "pen-y-fan/watson-text-to-speech-php": "dev-master"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/Pen-y-Fan/watson-text-to-speech-php"
+        }
+    ]
+}
+```
+
+Then run:
+
+```shell script
+composer install
 ```
 
 The package uses **PSR-4** namespaces, meaning it is compatible with all PHP projects which implement PSR-4. The package
@@ -32,7 +51,7 @@ The package uses **PSR-4** namespaces, meaning it is compatible with all PHP pro
 
 First obtain an API key and Url, free from [IBM Watson](https://www.ibm.com/uk-en/cloud/watson-text-to-speech), the lite
  tier allows 10,000 characters per month. No credit card is required. For full instructions see 
- [Getting started with Text to Speech](https://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-gettingStarted#getting-started-tutorial)
+ [Getting started with Text to Speech](https.://cloud.ibm.com/docs/services/text-to-speech?topic=text-to-speech-gettingStarted#getting-started-tutorial)
 
 ### TL&DR;
 
@@ -69,7 +88,7 @@ Change to the API key in your Manage Credentials for Text to Speech.
  
 - e.g. f5sAznhrKQyvBFFaZbtF60m5tzLbqWhyALQawBg5TjRI
 
-**Note:** this is the example from the tutorial - it will not work!
+**Note:** This is the example from the IBM tutorial - it will not work!
 
 ```php
 $apiKey = 'f5sAznhrKQyvBFFaZbtF60m5tzLbqWhyALQawBg5TjRI';
@@ -89,13 +108,15 @@ $watson->setWatsonUrl($watsonUrl);
 
 Available regions:
 
-* Dallas: https://api.us-south.text-to-speech.watson.cloud.ibm.com
-* Washington DC: https://api.us-east.text-to-speech.watson.cloud.ibm.com
-* Frankfurt: https://api.eu-de.text-to-speech.watson.cloud.ibm.com
-* Sydney: https://api.au-syd.text-to-speech.watson.cloud.ibm.com
-* Tokyo: https://api.jp-tok.text-to-speech.watson.cloud.ibm.com
-* London: https://api.eu-gb.text-to-speech.watson.cloud.ibm.com
-* Seoul: https://api.kr-seo.text-to-speech.watson.cloud.ibm.com
+Region | Url 
+--- | --- 
+Dallas | <https://api.us-south.text-to-speech.watson.cloud.ibm.com>
+Washington DC| <https://api.us-east.text-to-speech.watson.cloud.ibm.com>
+Frankfurt | <https://api.eu-de.text-to-speech.watson.cloud.ibm.com>
+Sydney | <https://api.au-syd.text-to-speech.watson.cloud.ibm.com>
+Tokyo | <https://api.jp-tok.text-to-speech.watson.cloud.ibm.com>
+London | <https://api.eu-gb.text-to-speech.watson.cloud.ibm.com>
+Seoul | <https://api.kr-seo.text-to-speech.watson.cloud.ibm.com>
 
 #### Setting output path
 
@@ -115,7 +136,7 @@ An empty string or invalid file directory will throw an exception.
 
 #### Convert Text to Speech
 
-Finally call `runTextToSpeech` passing in the text to be convert to speech.
+Finally, call `runTextToSpeech` passing in the text to be convert to speech.
 
 ```php
 $text = 'This is some text I want converted to speech';
@@ -123,7 +144,7 @@ $text = 'This is some text I want converted to speech';
 $file = $watson->runTextToSpeech($text);
 ```
 
-`$file` will contain the file path, with the file name, in a date time UTC format + three digit random number, in the
+`$file` will contain the file path, with the file name, in a date time UTC format + three digits random number, in the
  choose audio format. E.G. An **mp3** audio format would be saved as: **yyyymmdd-hhmmssUTCnnn.mp3**
   
 ### Exception handling
@@ -141,7 +162,7 @@ try {
 }
 ```
 
-Will throw and exception `Not a valid audio format.` as `mp4` audio format is not supported as of now
+Will throw an exception `Not a valid audio format.` as `mp4` audio format is not supported as of now
 
 ### Other callable methods
 
@@ -184,7 +205,6 @@ The language and voice combination must match the name is the list.
 
 * _allowed voices:_  [See Table](#supported-language-and-voice-list)
 * _default:_ `MichaelVoice`
----
 
 ##### Set Name 
 
@@ -270,12 +290,12 @@ WATSON_API_URL=https://api.eu-gb.text-to-speech.watson.cloud.ibm.com
 WATSON_API_NAME=en-US_MichaelVoice
 ``` 
 
-If using git version control is recommended to add the Api key to the **.env** file and check it is included in
- **.gitignore**, by default it is. 
+If using git version control it is recommended to add the Api key to the **.env** file and double check **.env** is
+ included in **.gitignore**, by default it is. 
 
 ##### WATSON_API_KEYS
 
-**Note:** this is the example from the tutorial - it will not work!
+**Note:** This is the example from the tutorial - it will not work!
 
 Same as [Setting API Key](#setting-api-key)
 
@@ -283,7 +303,7 @@ Same as [Setting API Key](#setting-api-key)
 
 Same as [Setting output path](#setting-output-path)
 
-`storage/watson-api` is the relative link from the public folder. I.E. Relative to **index.php**.
+`storage/watson-api` is the relative link from the public folder. I.E. Relative to public/**index.php**.
 
 ##### WATSON_API_URL
 
@@ -318,18 +338,81 @@ The above will run when the  `/watson/some text to convert` route is hit and ret
 
 If there are any problems with the key/values provided or with the IBM Watson API, an error will be returned.
 
+On inside a controller:
+
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+use Exception;use Illuminate\Http\Request;
+use PenYFan\WatsonTextToSpeech\WatsonTextToSpeech;
+
+class WatsonController extends Controller
+{
+    /**
+     * @var WatsonTextToSpeech
+     */
+    protected $watson;
+
+    public function __construct(WatsonTextToSpeech $watson)
+    {
+        $this->watson = $watson;
+    }
+
+    public function store($text)
+    {
+        // validate the request
+        try {
+            $file = $this->watson->runTextToSpeech($text);
+        } catch (Exception $e) {
+            return "Error: " . $e->getMessage();
+        }
+
+        $link = "http://127.0.0.1:8000/" . $file;
+        return "<a href={$link}>Play sound file</a>";
+    }
+}
+```
+
+#### Console Command
+
+To use the console command the **.env** file needs to be configured as stated above. From the command line run:
+
+```shell script
+php artisan watson-text-to-speech
+```
+
+When prompted type in the text to be converted. Wait for the API call to complete, the location of the speech file
+ will display. e.g.: 
+
+```text
+php artisan watson-text-to-speech
+
+ Enter the text you wish to convert to speech::
+ > Test console command
+
+Text has been converted to speech, see: storage/watson-api/20200510-183722UTC306.mp3
+```
+
+## Example
+
+Example of Watson API text to speech output:
+
+<video controls="" autoplay="" name="media">
+    <source src="./20200510-193413UTC748.mp3" type="audio/mpeg">
+</video>
+
+[20200510-193413UTC748.mp3](20200510-193413UTC748.mp3)
+
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
-
-## Security
-
-If you discover any security related issues, please email michael.pen.y.fan@gmail.com instead of using the issue
- tracker.
+This is a **personal project**. Contributions are **not** required. Anyone interested in developing this project are welcome to 
+ fork or clone for your own use.
 
 ## Credits
 
@@ -338,8 +421,8 @@ If you discover any security related issues, please email michael.pen.y.fan@gmai
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
 ## Laravel Package Boilerplate
 
-This package was generated using the [Laravel Package Boilerplate](https://laravelpackageboilerplate.com).
+The Laravel package Boilerplate was generated using the [Laravel Package Boilerplate](https://laravelpackageboilerplate.com).

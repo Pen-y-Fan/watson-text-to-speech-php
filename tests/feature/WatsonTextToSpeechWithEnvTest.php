@@ -7,6 +7,7 @@ namespace PenYFan\WatsonTextToSpeech\Tests\feature;
 use Exception;
 use Orchestra\Testbench\TestCase;
 use PenYFan\WatsonTextToSpeech\WatsonTextToSpeech;
+use Throwable;
 
 class WatsonTextToSpeechWithEnvTest extends TestCase
 {
@@ -19,10 +20,10 @@ class WatsonTextToSpeechWithEnvTest extends TestCase
 
         try {
             $env = parse_ini_file(__DIR__ . '/../../' . $file);
-        } catch (Exception $exception) {
+        } catch (Throwable $throwable) {
             $this->markTestSkipped(
                 'Skipped: The ' . $file . ' file is not available: '
-                . realpath(__DIR__ . '/../../') . DIRECTORY_SEPARATOR . $file
+                . realpath(__DIR__ . '/../..') . DIRECTORY_SEPARATOR . $file
             );
         }
 
@@ -30,7 +31,7 @@ class WatsonTextToSpeechWithEnvTest extends TestCase
             $this->markTestSkipped(
                 'Skipped: There was a problem parsing file: ' . $file . PHP_EOL
                 . 'The file can be opened, but has an error: '
-                . realpath(__DIR__ . '/../../') . DIRECTORY_SEPARATOR . $file
+                . realpath(__DIR__ . '/../..') . DIRECTORY_SEPARATOR . $file
             );
         }
 
@@ -38,7 +39,7 @@ class WatsonTextToSpeechWithEnvTest extends TestCase
             $this->markTestSkipped(
                 'Skipped: The .env file does not contain WATSON_API_KEY' . PHP_EOL
                 . 'The file can be opened, but does not contain a set WATSON_API_KEY key: '
-                . realpath(__DIR__ . '/../../') . DIRECTORY_SEPARATOR . $file
+                . realpath(__DIR__ . '/../..') . DIRECTORY_SEPARATOR . $file
             );
         }
 
@@ -62,7 +63,6 @@ class WatsonTextToSpeechWithEnvTest extends TestCase
             ->runTextToSpeech('Env working');
 
         $this->assertStringStartsWith((string) config('config.watsonApi.path'), $file);
-        unlink((string) config('config.watsonApi.path'));
     }
 
     /**
@@ -75,7 +75,6 @@ class WatsonTextToSpeechWithEnvTest extends TestCase
         $file = $watson->runTextToSpeech('Defaults working');
 
         $this->assertStringStartsWith((string) config('config.watsonApi.path'), $file);
-        unlink((string) config('config.watsonApi.path'));
     }
 
     protected function setConfig(array $env): void

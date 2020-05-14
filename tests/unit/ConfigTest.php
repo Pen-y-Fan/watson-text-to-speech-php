@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace PenYFan\WatsonTextToSpeech\Tests\unit;
 
-use Exception;
 use Orchestra\Testbench\TestCase;
 use PenYFan\WatsonTextToSpeech\WatsonTextToSpeechServiceProvider;
+use Throwable;
 
 class ConfigTest extends TestCase
 {
@@ -23,7 +23,7 @@ class ConfigTest extends TestCase
 
         try {
             $env = parse_ini_file(__DIR__ . '/../../.env.example');
-        } catch (Exception $exception) {
+        } catch (Throwable $throwable) {
             $this->markTestSkipped(
                 'The .env.example file is not available: ' . realpath(
                     __DIR__ . '/../../'
